@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-electron
+*.log
+.DS_Store
+
+# Vite cache
+.vite/
+
+# Electron builder artifacts
+release/
+

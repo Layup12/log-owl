@@ -1,0 +1,56 @@
+{
+  "name": "log-owl",
+  "version": "0.1.0",
+  "productName": "Log Owl",
+  "description": "Desktop time tracking application",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "pnpm run build:electron && concurrently \"pnpm run dev:vite\" \"pnpm run dev:electron\"",
+    "dev:vite": "vite",
+    "dev:electron": "wait-on http://localhost:5173 && electron .",
+    "build": "pnpm run build:electron && vite build && electron-builder",
+    "build:desktop": "pnpm run build:electron && vite build && electron-builder",
+    "build:electron": "tsc -p electron",
+    "preview": "vite preview",
+    "postinstall": "electron-rebuild -f -w better-sqlite3"
+  },
+  "packageManager": "pnpm@10.30.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "better-sqlite3"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.3",
+    "@mui/material": "^5.15.3",
+    "better-sqlite3": "^11.0.0",
+    "dayjs": "^1.11.10",
+    "react-router-dom": "^6.21.0",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.9.1",
+    "electron-rebuild": "^3.2.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "vitest": "^1.6.1",
+    "wait-on": "^7.2.0"
+  }
+}
