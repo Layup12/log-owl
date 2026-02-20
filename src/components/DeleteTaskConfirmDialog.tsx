@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
   Typography,
-} from '@mui/material'
+} from '@shared/ui'
 
 interface DeleteTaskConfirmDialogProps {
   open: boolean

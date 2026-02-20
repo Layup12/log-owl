@@ -6,11 +6,12 @@ import {
   Typography,
   IconButton,
   Tooltip,
-} from '@mui/material'
+} from '@shared/ui'
 import { Check as CheckIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import { DeleteTaskConfirmDialog } from './DeleteTaskConfirmDialog'
-import { useTimerStore } from '../store/timerStore'
-import type { Task } from '../types/task'
+import { useTimerStore } from '@shared/store'
+import type { Task } from '@shared/types'
+import { deleteTask, updateTask } from '@api'
 
 interface TaskCardProps {
   task: Task
@@ -27,7 +28,7 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
 
   const handleToggleCompleted = async (e: React.MouseEvent) => {
     e.stopPropagation()
-    await window.electron.invoke('task:update', task.id, {
+    await updateTask(task.id, {
       completed_at: isCompleted ? null : new Date().toISOString(),
     })
     onUpdate()
@@ -40,7 +41,7 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
 
   const handleConfirmDelete = async () => {
     if (activeTaskId === task.id && activeEntryId !== null) clearActive()
-    await window.electron.invoke('task:delete', task.id)
+    await deleteTask(task.id)
     onUpdate()
   }
 

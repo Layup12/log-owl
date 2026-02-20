@@ -8,23 +8,46 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-} from '@mui/material'
-import { DarkMode as DarkModeIcon, LightMode as LightModeIcon, Assessment as ReportIcon } from '@mui/icons-material'
-import { useThemeStore } from '../store/themeStore'
+} from '@shared/ui'
+import { DarkMode as DarkModeIcon, LightMode as LightModeIcon, Assessment as ReportIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material'
+import { useThemeStore } from '@shared/store'
 import { ReportModal } from './ReportModal'
+import { useLayoutHeader } from '@hooks'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { mode, toggleMode } = useThemeStore()
   const [reportOpen, setReportOpen] = useState(false)
   const location = useLocation()
   const isTaskDetailPage = /^\/task\/[^/]+$/.test(location.pathname) && location.pathname !== '/task/new'
+  const { title, onBack } = useLayoutHeader()
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <AppBar position="static">
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+      <AppBar position="static" sx={{ flexShrink: 0 }}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Log Owl
+          {onBack && (
+            <IconButton
+              color="inherit"
+              edge="start"
+              onClick={onBack}
+              aria-label="Назад"
+              sx={{ mr: 1 }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+          )}
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              minWidth: 0,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {title}
           </Typography>
           <IconButton color="inherit" onClick={toggleMode} aria-label="toggle theme">
             {mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
@@ -32,8 +55,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </Toolbar>
       </AppBar>
       <ReportModal open={reportOpen} onClose={() => setReportOpen(false)} />
-      <Box component="main" sx={{ flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column', p: 2 }}>
-        {children}
+      <Box component="main" sx={{ flex: '1 1 0', minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden', p: 2 }}>
+        <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          {children}
+        </Box>
       </Box>
       {!isTaskDetailPage && (
         <Tooltip title="Отчёт">

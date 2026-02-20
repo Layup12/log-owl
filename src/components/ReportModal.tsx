@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -10,18 +10,11 @@ import {
   Box,
   List,
   ListItem,
-  ListItemText,
   CircularProgress,
-} from '@mui/material'
-import { formatUtcLocal, datetimeLocalToUtcIso } from '../utils/datetime'
-import {
-  mergeIntervals,
-  clipIntervalsToRange,
-  totalMinutesRoundedUp,
-  type Interval,
-} from '../utils/mergeIntervals'
-import type { TimeEntry } from '../types/timeEntry'
-import type { Task } from '../types/task'
+} from '@shared/ui'
+import { formatUtcLocal, datetimeLocalToUtcIso, mergeIntervals, clipIntervalsToRange, totalMinutesRoundedUp, type Interval } from '@shared/lib'
+import type { TimeEntry } from '@shared/types'
+import { getTimeEntriesInRange, getAllTasks } from '@api'
 
 interface ReportRow {
   taskId: number
@@ -68,10 +61,10 @@ export function ReportModal({ open, onClose }: ReportModalProps) {
       const fromIso = datetimeLocalToUtcIso(from)
       const toIso = datetimeLocalToUtcIso(to)
       const [entries, tasks] = await Promise.all([
-        window.electron.invoke('report:getTimeEntriesInRange', fromIso, toIso) as Promise<TimeEntry[]>,
-        window.electron.invoke('task:getAll') as Promise<Task[]>,
+        getTimeEntriesInRange(fromIso, toIso),
+        getAllTasks(),
       ])
-      const taskMap = new Map(tasks.map((t) => [t.id, t]))
+      const taskMap = new Map(tasks.map((t: { id: number; title?: string | null }) => [t.id, t]))
       const byTask = new Map<number, TimeEntry[]>()
       for (const e of entries) {
         if (!byTask.has(e.task_id)) byTask.set(e.task_id, [])
