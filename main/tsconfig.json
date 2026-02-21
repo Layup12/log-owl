@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "lib": ["ES2020"],
+    "outDir": "../dist-electron",
+    "rootDir": "..",
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  },
+  "include": ["**/*", "../contracts/**/*"],
+  "exclude": ["node_modules"]
+}

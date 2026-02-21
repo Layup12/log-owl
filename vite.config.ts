@@ -10,14 +10,28 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@api': path.resolve(__dirname, './src/api'),
-      '@shared/ui': path.resolve(__dirname, './src/shared/ui'),
-      '@shared/lib': path.resolve(__dirname, './src/shared/lib'),
-      '@shared/store': path.resolve(__dirname, './src/shared/store'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@context': path.resolve(__dirname, './src/context'),
+      // @contracts
+      '@contracts': path.resolve(__dirname, './contracts'),
+      // @main
+      '@main': path.resolve(__dirname, './main'),
+      '@main/app': path.resolve(__dirname, './main/app'),
+      '@main/constants': path.resolve(__dirname, './main/constants'),
+      '@main/db': path.resolve(__dirname, './main/db'),
+      '@main/ipc': path.resolve(__dirname, './main/ipc'),
+      '@main/lib': path.resolve(__dirname, './main/lib'),
+      '@main/migrations': path.resolve(__dirname, './main/migrations'),
+      '@main/repositories/*': path.resolve(__dirname, './main/repositories/*'),
+      '@main/windowState': path.resolve(__dirname, './main/windowState'),
+      // @renderer
+      '@renderer': path.resolve(__dirname, './renderer'),
+      '@renderer/api': path.resolve(__dirname, './renderer/api'),
+      '@renderer/components': path.resolve(__dirname, './renderer/components'),
+      '@renderer/context': path.resolve(__dirname, './renderer/context'),
+      '@renderer/hooks': path.resolve(__dirname, './renderer/hooks'),
+      '@renderer/shared/ui': path.resolve(__dirname, './renderer/shared/ui'),
+      '@renderer/shared/lib': path.resolve(__dirname, './renderer/shared/lib'),
+      '@renderer/shared/store': path.resolve(__dirname, './renderer/shared/store'),
+      '@renderer/shared/types': path.resolve(__dirname, './renderer/shared/types')
     }
   },
   test: {

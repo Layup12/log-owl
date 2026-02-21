@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      // @contracts
+      "@contracts": ["contracts"],
+      // @main
+      "@main": ["main"],
+      "@main/app": ["main/app"],
+      "@main/constants": ["main/constants"],
+      "@main/db": ["main/db"],
+      "@main/ipc": ["main/ipc"],
+      "@main/lib": ["main/lib"],
+      "@main/migrations": ["main/migrations"],
+      "@main/repositories/*": ["main/repositories/*"],
+      "@main/windowState": ["main/windowState"],
+      // @renderer
+      "@renderer": ["renderer"],
+      "@renderer/api": ["renderer/api"],
+      "@renderer/components": ["renderer/components"],
+      "@renderer/context": ["renderer/context"],
+      "@renderer/hooks": ["renderer/hooks"],
+      "@renderer/shared/ui": ["renderer/shared/ui"],
+      "@renderer/shared/lib": ["renderer/shared/lib"],
+      "@renderer/shared/store": ["renderer/shared/store"],
+      "@renderer/shared/types": ["renderer/shared/types"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
