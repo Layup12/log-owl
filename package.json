@@ -5,6 +5,10 @@
   "description": "Desktop time tracking application",
   "main": "dist-electron/main/main.js",
   "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest",
     "generate-preload-channels": "node scripts/generate-preload-channels.js",
@@ -15,9 +19,18 @@
     "build:desktop": "pnpm run build:electron && vite build && electron-builder",
     "build:electron": "pnpm run generate-preload-channels && tsc -p main && tsc-alias -p main/tsconfig.json",
     "preview": "vite preview",
-    "postinstall": "electron-rebuild -f -w better-sqlite3"
+    "postinstall": "electron-rebuild -f -w better-sqlite3",
+    "prepare": "husky",
+    "check": "pnpm run lint && pnpm run format:check && pnpm run test"
   },
   "packageManager": "pnpm@10.30.1",
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,html}": "prettier --write"
+  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "electron",
@@ -39,6 +52,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.3",
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.43",
@@ -48,10 +62,19 @@
     "electron": "^28.3.3",
     "electron-builder": "^24.9.1",
     "electron-rebuild": "^3.2.9",
+    "eslint": "^9.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^17.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.3.3",
+    "typescript-eslint": "^8.56.0",
     "vite": "^5.0.8",
     "vitest": "^1.6.1",
     "wait-on": "^7.2.0"

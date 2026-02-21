@@ -3,10 +3,16 @@ import type { ZodType } from 'zod'
 import { logError } from '@main/lib'
 import type { IpcResponse } from '@contracts'
 
-export type { IpcErrorResponse, IpcResponse, IpcSuccessResponse } from '@contracts'
+export type {
+  IpcErrorResponse,
+  IpcResponse,
+  IpcSuccessResponse,
+} from '@contracts'
 
 /** Форматирует ошибку Zod в читаемую строку для ответа рендереру. */
-function formatZodError(error: { issues: Array<{ path: unknown[]; message: string }> }): string {
+function formatZodError(error: {
+  issues: Array<{ path: unknown[]; message: string }>
+}): string {
   return error.issues
     .map((issue) => {
       const path = issue.path.length
@@ -46,14 +52,15 @@ function validateArgs<T extends unknown[]>(
  */
 export function handleIpc<T>(
   channel: string,
-  handler: (event: IpcMainInvokeEvent, ...args: any[]) => Promise<T> | T
-): (event: IpcMainInvokeEvent, ...args: any[]) => Promise<IpcResponse<T>> {
+  handler: (event: IpcMainInvokeEvent, ...args: unknown[]) => Promise<T> | T
+): (event: IpcMainInvokeEvent, ...args: unknown[]) => Promise<IpcResponse<T>> {
   return async (event, ...args) => {
     try {
       const result = await handler(event, ...args)
       return { ok: true, data: result }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error)
+      const errorMessage =
+        error instanceof Error ? error.message : String(error)
       logError(`IPC ${channel}:`, errorMessage, error)
       return { ok: false, error: errorMessage }
     }
@@ -72,7 +79,7 @@ export function validateAndHandle<T, A extends unknown[]>(
   channel: string,
   schemas: { [K in keyof A]: ZodType<A[K]> },
   handler: (event: IpcMainInvokeEvent, ...args: A) => Promise<T> | T
-): (event: IpcMainInvokeEvent, ...args: any[]) => Promise<IpcResponse<T>> {
+): (event: IpcMainInvokeEvent, ...args: unknown[]) => Promise<IpcResponse<T>> {
   return handleIpc(channel, async (event, ...args: unknown[]) => {
     const validated = validateArgs<A>(schemas as ZodType<unknown>[], args)
     return handler(event, ...validated)
