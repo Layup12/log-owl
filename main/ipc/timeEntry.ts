@@ -36,13 +36,18 @@ export function registerTimeEntry(ipcMain: IpcMain, withDb: WithDb): void {
       withDb((db) => timeEntryRepo.getByTaskId(db, task_id))
     )
   )
-  ipcMain.handle(TIME_ENTRY_GET_ALL, handleIpc(TIME_ENTRY_GET_ALL, () =>
-    withDb((db) => timeEntryRepo.getAll(db))
-  ))
+  ipcMain.handle(
+    TIME_ENTRY_GET_ALL,
+    handleIpc(TIME_ENTRY_GET_ALL, () =>
+      withDb((db) => timeEntryRepo.getAll(db))
+    )
+  )
   ipcMain.handle(
     TIME_ENTRY_UPDATE,
-    validateAndHandle(TIME_ENTRY_UPDATE, [idSchema, timeEntryUpdateSchema], (_, id, data) =>
-      withDb((db) => timeEntryRepo.update(db, id, data))
+    validateAndHandle(
+      TIME_ENTRY_UPDATE,
+      [idSchema, timeEntryUpdateSchema],
+      (_, id, data) => withDb((db) => timeEntryRepo.update(db, id, data))
     )
   )
   ipcMain.handle(

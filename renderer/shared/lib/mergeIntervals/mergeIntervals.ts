@@ -22,13 +22,16 @@ export interface MergedInterval {
  */
 export function mergeIntervals(intervals: Interval[]): MergedInterval[] {
   const closed = intervals.filter(
-    (i): i is Interval & { end: string } => i.end !== null && i.end !== undefined
+    (i): i is Interval & { end: string } =>
+      i.end !== null && i.end !== undefined
   )
   if (closed.length === 0) return []
   const sorted = [...closed].sort(
     (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
   )
-  const result: MergedInterval[] = [{ start: sorted[0].start, end: sorted[0].end }]
+  const result: MergedInterval[] = [
+    { start: sorted[0].start, end: sorted[0].end },
+  ]
   for (let i = 1; i < sorted.length; i++) {
     const curr = sorted[i]
     const last = result[result.length - 1]
@@ -84,4 +87,3 @@ export function clipIntervalsToRange(
   }
   return result
 }
-

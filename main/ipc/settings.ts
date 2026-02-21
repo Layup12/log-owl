@@ -30,9 +30,10 @@ export function registerSettings(ipcMain: IpcMain, withDb: WithDb): void {
       })
     )
   )
-  ipcMain.handle(SETTINGS_GET_ALL, handleIpc(SETTINGS_GET_ALL, () =>
-    withDb((db) => settingsRepo.getAll(db))
-  ))
+  ipcMain.handle(
+    SETTINGS_GET_ALL,
+    handleIpc(SETTINGS_GET_ALL, () => withDb((db) => settingsRepo.getAll(db)))
+  )
   ipcMain.handle(
     SETTINGS_DELETE,
     validateAndHandle(SETTINGS_DELETE, [keySchema], (_, key) =>

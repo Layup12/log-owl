@@ -1,7 +1,21 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Box, TextField, CircularProgress, Alert, IconButton, Tooltip, Tabs, Tab, useMediaQuery } from '@renderer/shared/ui'
-import { PlayArrow as PlayIcon, Pause as PauseIcon, Delete as DeleteIcon } from '@mui/icons-material'
+import {
+  Box,
+  TextField,
+  CircularProgress,
+  Alert,
+  IconButton,
+  Tooltip,
+  Tabs,
+  Tab,
+  useMediaQuery,
+} from '@renderer/shared/ui'
+import {
+  PlayArrow as PlayIcon,
+  Pause as PauseIcon,
+  Delete as DeleteIcon,
+} from '@mui/icons-material'
 import { useTheme } from '@mui/material/styles'
 import { TimerCounter, DeleteTaskConfirmDialog } from '@renderer/components'
 import { useLayoutOptions } from '@renderer/hooks'
@@ -42,20 +56,35 @@ export function TaskPage() {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         {state.isTimerRunning ? (
           <Tooltip title="Стоп">
-            <IconButton color="primary" onClick={state.handleTimerStop} aria-label="Стоп">
+            <IconButton
+              color="primary"
+              onClick={state.handleTimerStop}
+              aria-label="Стоп"
+            >
               <PauseIcon />
             </IconButton>
           </Tooltip>
         ) : (
           <Tooltip title="Старт">
-            <IconButton color="primary" onClick={state.handleTimerStart} aria-label="Старт">
+            <IconButton
+              color="primary"
+              onClick={state.handleTimerStart}
+              aria-label="Старт"
+            >
               <PlayIcon />
             </IconButton>
           </Tooltip>
         )}
-        {state.isTimerRunning && state.startedAt && <TimerCounter startedAt={state.startedAt} />}
+        {state.isTimerRunning && state.startedAt && (
+          <TimerCounter startedAt={state.startedAt} />
+        )}
         <Tooltip title="Удалить задачу">
-          <IconButton color="error" onClick={state.openDeleteTaskDialog} aria-label="Удалить задачу" sx={{ ml: 'auto' }}>
+          <IconButton
+            color="error"
+            onClick={state.openDeleteTaskDialog}
+            aria-label="Удалить задачу"
+            sx={{ ml: 'auto' }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -84,22 +113,89 @@ export function TaskPage() {
   )
 
   const block2 = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden' }}>
-      <Tabs value={tab} onChange={(_, value) => setTab(value)} sx={{ flexShrink: 0, mb: 2 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        minHeight: 0,
+        minWidth: 0,
+        overflow: 'hidden',
+      }}
+    >
+      <Tabs
+        value={tab}
+        onChange={(_, value) => setTab(value)}
+        sx={{ flexShrink: 0, mb: 2 }}
+      >
         <Tab label="Интервалы" value="intervals" />
         <Tab label="Сессии" value="sessions" />
       </Tabs>
-      <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        {tab === 'intervals' ? <IntervalsList state={state} /> : <SessionsSection state={state} />}
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          minWidth: 0,
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {tab === 'intervals' ? (
+          <IntervalsList state={state} />
+        ) : (
+          <SessionsSection state={state} />
+        )}
       </Box>
     </Box>
   )
 
   return (
-    <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-      <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, mx: 'auto', width: '100%', display: 'flex', flexDirection: isWide ? 'row' : 'column', gap: 3, alignItems: 'stretch', overflow: isWide ? 'auto' : 'hidden' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 0, overflow: 'auto' }}>{block1}</Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: '40%', flex: 1, minHeight: 250, overflow: 'hidden' }}>{block2}</Box>
+    <Box
+      sx={{
+        flex: 1,
+        minHeight: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          minWidth: 0,
+          mx: 'auto',
+          width: '100%',
+          display: 'flex',
+          flexDirection: isWide ? 'row' : 'column',
+          gap: 3,
+          alignItems: 'stretch',
+          overflow: isWide ? 'auto' : 'hidden',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: 0,
+            overflow: 'auto',
+          }}
+        >
+          {block1}
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: '40%',
+            flex: 1,
+            minHeight: 250,
+            overflow: 'hidden',
+          }}
+        >
+          {block2}
+        </Box>
       </Box>
 
       <DeleteTaskConfirmDialog

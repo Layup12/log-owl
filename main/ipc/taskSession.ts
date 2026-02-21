@@ -21,8 +21,10 @@ import {
 export function registerTaskSession(ipcMain: IpcMain, withDb: WithDb): void {
   ipcMain.handle(
     TASK_SESSION_CREATE,
-    validateAndHandle(TASK_SESSION_CREATE, [taskSessionInsertSchema], (_, data) =>
-      withDb((db) => taskSessionRepo.create(db, data))
+    validateAndHandle(
+      TASK_SESSION_CREATE,
+      [taskSessionInsertSchema],
+      (_, data) => withDb((db) => taskSessionRepo.create(db, data))
     )
   )
   ipcMain.handle(
@@ -37,13 +39,18 @@ export function registerTaskSession(ipcMain: IpcMain, withDb: WithDb): void {
       withDb((db) => taskSessionRepo.getByTaskId(db, task_id))
     )
   )
-  ipcMain.handle(TASK_SESSION_GET_ALL, handleIpc(TASK_SESSION_GET_ALL, () =>
-    withDb((db) => taskSessionRepo.getAll(db))
-  ))
+  ipcMain.handle(
+    TASK_SESSION_GET_ALL,
+    handleIpc(TASK_SESSION_GET_ALL, () =>
+      withDb((db) => taskSessionRepo.getAll(db))
+    )
+  )
   ipcMain.handle(
     TASK_SESSION_UPDATE,
-    validateAndHandle(TASK_SESSION_UPDATE, [idSchema, taskSessionUpdateSchema], (_, id, data) =>
-      withDb((db) => taskSessionRepo.update(db, id, data))
+    validateAndHandle(
+      TASK_SESSION_UPDATE,
+      [idSchema, taskSessionUpdateSchema],
+      (_, id, data) => withDb((db) => taskSessionRepo.update(db, id, data))
     )
   )
   ipcMain.handle(
@@ -54,8 +61,17 @@ export function registerTaskSession(ipcMain: IpcMain, withDb: WithDb): void {
   )
   ipcMain.handle(
     TASK_SESSION_CLOSE_OPEN_BY_TASK_ID,
-    validateAndHandle(TASK_SESSION_CLOSE_OPEN_BY_TASK_ID, [idSchema], (_, task_id) =>
-      withDb((db) => taskSessionRepo.closeOpenByTaskId(db, task_id, new Date().toISOString()))
+    validateAndHandle(
+      TASK_SESSION_CLOSE_OPEN_BY_TASK_ID,
+      [idSchema],
+      (_, task_id) =>
+        withDb((db) =>
+          taskSessionRepo.closeOpenByTaskId(
+            db,
+            task_id,
+            new Date().toISOString()
+          )
+        )
     )
   )
 }

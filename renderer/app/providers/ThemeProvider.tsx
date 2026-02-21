@@ -1,5 +1,8 @@
 import React from 'react'
-import { ThemeProvider as MuiThemeProvider, CssBaseline } from '@renderer/shared/ui'
+import {
+  ThemeProvider as MuiThemeProvider,
+  CssBaseline,
+} from '@renderer/shared/ui'
 import { useThemeStore } from '@renderer/shared/store'
 import { getTheme } from '../config/theme'
 

@@ -20,8 +20,8 @@ export const useThemeStore = create<ThemeState>((set) => ({
   toggleMode: () =>
     set((state) => {
       const next: ThemeMode = state.mode === 'light' ? 'dark' : 'light'
-      if (typeof localStorage !== 'undefined') localStorage.setItem(STORAGE_KEY, next)
+      if (typeof localStorage !== 'undefined')
+        localStorage.setItem(STORAGE_KEY, next)
       return { mode: next }
     }),
 }))
-

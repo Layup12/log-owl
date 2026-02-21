@@ -5,7 +5,7 @@ import {
   TASK_GET_ALL,
   TASK_GET_BY_ID,
   TASK_UPDATE,
-  unwrapIpcResponse
+  unwrapIpcResponse,
 } from '@contracts'
 
 export interface CreateTaskInput {

@@ -1,4 +1,10 @@
-import { Box, Accordion, AccordionSummary, AccordionDetails, Typography } from '@renderer/shared/ui'
+import {
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from '@renderer/shared/ui'
 import { TaskCard } from '@renderer/components'
 import type { Task } from '@renderer/shared/types'
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
@@ -40,12 +46,22 @@ export function CompletedTasksSection({
         borderColor: 'divider',
       }}
     >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 40, '& .MuiAccordionSummary-content': { my: 0.75 } }}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        sx={{ minHeight: 40, '& .MuiAccordionSummary-content': { my: 0.75 } }}
+      >
         <Typography variant="body2" color="text.secondary">
           Выполнено ({tasks.length})
         </Typography>
       </AccordionSummary>
-      <AccordionDetails sx={{ pt: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <AccordionDetails
+        sx={{
+          pt: 0,
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <Box
           sx={{
             maxHeight: '50vh',
@@ -69,4 +85,3 @@ export function CompletedTasksSection({
     </Accordion>
   )
 }
-

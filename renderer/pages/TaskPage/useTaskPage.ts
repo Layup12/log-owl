@@ -2,7 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Task, TaskSession, TimeEntry } from '@renderer/shared/types'
 import { useTimerStore } from '@renderer/shared/store'
-import { utcIsoToDatetimeLocal, datetimeLocalToUtcIso, totalMinutesRoundedUp } from '@renderer/shared/lib'
+import {
+  utcIsoToDatetimeLocal,
+  datetimeLocalToUtcIso,
+  totalMinutesRoundedUp,
+} from '@renderer/shared/lib'
 import {
   getTaskById,
   updateTask,
@@ -86,7 +90,8 @@ export function useTaskPage(taskId: number): TaskPageState & TaskPageHandlers {
   const [title, setTitle] = useState('')
   const [comment, setComment] = useState('')
   const commentSaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const { activeEntryId, activeTaskId, startedAt, clearActive } = useTimerStore()
+  const { activeEntryId, activeTaskId, startedAt, clearActive } =
+    useTimerStore()
   const isTimerRunning = activeTaskId === taskId && activeEntryId !== null
   // Manual interval form (по умолчанию — сегодня, время 00:00)
   const [manualStart, setManualStart] = useState(getTodayDateTimeLocal)
@@ -97,7 +102,8 @@ export function useTaskPage(taskId: number): TaskPageState & TaskPageHandlers {
   const [editStart, setEditStart] = useState('')
   const [editEnd, setEditEnd] = useState('')
   // Delete confirm
-  const [deleteConfirmEntry, setDeleteConfirmEntry] = useState<TimeEntry | null>(null)
+  const [deleteConfirmEntry, setDeleteConfirmEntry] =
+    useState<TimeEntry | null>(null)
   const [deleteTaskConfirmOpen, setDeleteTaskConfirmOpen] = useState(false)
 
   const loadTask = useCallback(async () => {
@@ -185,7 +191,9 @@ export function useTaskPage(taskId: number): TaskPageState & TaskPageHandlers {
       const state = useTimerStore.getState()
       if (state.activeTaskId === taskId && state.activeEntryId !== null) {
         const ended_at = new Date().toISOString()
-        updateTimeEntry(state.activeEntryId, { endedAt: ended_at }).catch(() => {})
+        updateTimeEntry(state.activeEntryId, { endedAt: ended_at }).catch(
+          () => {}
+        )
         useTimerStore.getState().clearActive()
       }
     }
@@ -370,4 +378,3 @@ export function useTaskPage(taskId: number): TaskPageState & TaskPageHandlers {
     handleConvertSessionToInterval,
   }
 }
-

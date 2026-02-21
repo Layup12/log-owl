@@ -14,12 +14,23 @@ interface TaskGridProps {
 function ThinPlusIcon(props: React.ComponentProps<typeof SvgIcon>) {
   return (
     <SvgIcon {...props} viewBox="0 0 24 24" fill="none">
-      <path stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" d="M12 5v14M5 12h14" />
+      <path
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        d="M12 5v14M5 12h14"
+      />
     </SvgIcon>
   )
 }
 
-export function TaskGrid({ tasks, cellSize, onTaskOpen, onTasksUpdate, onCreateTask }: TaskGridProps) {
+export function TaskGrid({
+  tasks,
+  cellSize,
+  onTaskOpen,
+  onTasksUpdate,
+  onCreateTask,
+}: TaskGridProps) {
   return (
     <Box
       sx={{
@@ -59,10 +70,11 @@ export function TaskGrid({ tasks, cellSize, onTaskOpen, onTasksUpdate, onCreateT
             '&:last-child': { pb: 1 },
           }}
         >
-          <ThinPlusIcon sx={{ fontSize: 70, color: 'action.active', opacity: 0.7 }} />
+          <ThinPlusIcon
+            sx={{ fontSize: 70, color: 'action.active', opacity: 0.7 }}
+          />
         </CardContent>
       </Card>
     </Box>
   )
 }
-

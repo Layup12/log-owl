@@ -44,7 +44,12 @@ export function DeleteTaskConfirmDialog({
         <Button onClick={onClose} disabled={loading}>
           Отмена
         </Button>
-        <Button color="error" variant="contained" onClick={handleConfirm} disabled={loading}>
+        <Button
+          color="error"
+          variant="contained"
+          onClick={handleConfirm}
+          disabled={loading}
+        >
           Удалить
         </Button>
       </DialogActions>

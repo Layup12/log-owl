@@ -1,4 +1,12 @@
-import { Box, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, Button } from '@renderer/shared/ui'
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  Button,
+} from '@renderer/shared/ui'
 import type { TaskPageState, TaskPageHandlers } from '../useTaskPage'
 import dayjs from 'dayjs'
 
@@ -18,11 +26,20 @@ export function SessionsSection({ state }: SessionsSectionProps) {
         overflow: 'hidden',
       }}
     >
-      <Typography variant="subtitle2" color="text.secondary" gutterBottom sx={{ flexShrink: 0 }}>
+      <Typography
+        variant="subtitle2"
+        color="text.secondary"
+        gutterBottom
+        sx={{ flexShrink: 0 }}
+      >
         Сессии (открытия страницы)
       </Typography>
       <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'auto' }}>
-        <List dense component="div" sx={{ bgcolor: 'action.hover', borderRadius: 1 }}>
+        <List
+          dense
+          component="div"
+          sx={{ bgcolor: 'action.hover', borderRadius: 1 }}
+        >
           {state.sessions.length === 0 ? (
             <ListItem>
               <ListItemText primary="Нет сессий" />
@@ -32,7 +49,9 @@ export function SessionsSection({ state }: SessionsSectionProps) {
               <ListItem key={s.id}>
                 <ListItemText
                   primary={`${dayjs(s.opened_at).format('DD.MM.YYYY HH:mm:ss')} — ${
-                    s.closed_at ? dayjs(s.closed_at).format('DD.MM.YYYY HH:mm:ss') : 'не закрыта'
+                    s.closed_at
+                      ? dayjs(s.closed_at).format('DD.MM.YYYY HH:mm:ss')
+                      : 'не закрыта'
                   }`}
                 />
                 {s.closed_at && (
@@ -57,4 +76,3 @@ export function SessionsSection({ state }: SessionsSectionProps) {
     </Box>
   )
 }
-

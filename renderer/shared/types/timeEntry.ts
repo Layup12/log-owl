@@ -4,4 +4,3 @@ export interface TimeEntry {
   started_at: string
   ended_at: string | null
 }
-

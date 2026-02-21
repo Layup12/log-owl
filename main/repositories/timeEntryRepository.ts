@@ -1,7 +1,10 @@
 import type Database from 'better-sqlite3'
 import type { TimeEntry, TimeEntryInsert } from '../types'
 
-export function create(db: Database.Database, data: TimeEntryInsert): TimeEntry {
+export function create(
+  db: Database.Database,
+  data: TimeEntryInsert
+): TimeEntry {
   const stmt = db.prepare(
     'INSERT INTO time_entries (task_id, started_at, ended_at, source) VALUES (?, ?, ?, ?)'
   )
@@ -16,27 +19,46 @@ export function create(db: Database.Database, data: TimeEntryInsert): TimeEntry 
 }
 
 export function getById(db: Database.Database, id: number): TimeEntry | null {
-  const row = db.prepare('SELECT * FROM time_entries WHERE id = ?').get(id) as TimeEntry | undefined
+  const row = db.prepare('SELECT * FROM time_entries WHERE id = ?').get(id) as
+    | TimeEntry
+    | undefined
   return row ?? null
 }
 
-export function getByTaskId(db: Database.Database, task_id: number): TimeEntry[] {
-  return db.prepare('SELECT * FROM time_entries WHERE task_id = ? ORDER BY started_at').all(task_id) as TimeEntry[]
+export function getByTaskId(
+  db: Database.Database,
+  task_id: number
+): TimeEntry[] {
+  return db
+    .prepare('SELECT * FROM time_entries WHERE task_id = ? ORDER BY started_at')
+    .all(task_id) as TimeEntry[]
 }
 
 export function getAll(db: Database.Database): TimeEntry[] {
-  return db.prepare('SELECT * FROM time_entries ORDER BY started_at').all() as TimeEntry[]
+  return db
+    .prepare('SELECT * FROM time_entries ORDER BY started_at')
+    .all() as TimeEntry[]
 }
 
 export function getOpen(db: Database.Database): TimeEntry[] {
-  return db.prepare('SELECT * FROM time_entries WHERE ended_at IS NULL ORDER BY started_at').all() as TimeEntry[]
+  return db
+    .prepare(
+      'SELECT * FROM time_entries WHERE ended_at IS NULL ORDER BY started_at'
+    )
+    .all() as TimeEntry[]
 }
 
 /** Time entries that overlap [fromIso, toIso]: started_at < to AND (ended_at IS NULL OR ended_at > from) */
-export function getInRange(db: Database.Database, fromIso: string, toIso: string): TimeEntry[] {
-  return db.prepare(
-    'SELECT * FROM time_entries WHERE started_at < ? AND (ended_at IS NULL OR ended_at > ?) ORDER BY started_at'
-  ).all(toIso, fromIso) as TimeEntry[]
+export function getInRange(
+  db: Database.Database,
+  fromIso: string,
+  toIso: string
+): TimeEntry[] {
+  return db
+    .prepare(
+      'SELECT * FROM time_entries WHERE started_at < ? AND (ended_at IS NULL OR ended_at > ?) ORDER BY started_at'
+    )
+    .all(toIso, fromIso) as TimeEntry[]
 }
 
 export function update(

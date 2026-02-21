@@ -1,7 +1,10 @@
 import type Database from 'better-sqlite3'
 import type { TaskSession, TaskSessionInsert } from '../types'
 
-export function create(db: Database.Database, data: TaskSessionInsert): TaskSession {
+export function create(
+  db: Database.Database,
+  data: TaskSessionInsert
+): TaskSession {
   const stmt = db.prepare(
     'INSERT INTO task_sessions (task_id, opened_at, closed_at, last_seen) VALUES (?, ?, ?, ?)'
   )
@@ -16,16 +19,25 @@ export function create(db: Database.Database, data: TaskSessionInsert): TaskSess
 }
 
 export function getById(db: Database.Database, id: number): TaskSession | null {
-  const row = db.prepare('SELECT * FROM task_sessions WHERE id = ?').get(id) as TaskSession | undefined
+  const row = db.prepare('SELECT * FROM task_sessions WHERE id = ?').get(id) as
+    | TaskSession
+    | undefined
   return row ?? null
 }
 
-export function getByTaskId(db: Database.Database, task_id: number): TaskSession[] {
-  return db.prepare('SELECT * FROM task_sessions WHERE task_id = ? ORDER BY opened_at').all(task_id) as TaskSession[]
+export function getByTaskId(
+  db: Database.Database,
+  task_id: number
+): TaskSession[] {
+  return db
+    .prepare('SELECT * FROM task_sessions WHERE task_id = ? ORDER BY opened_at')
+    .all(task_id) as TaskSession[]
 }
 
 export function getAll(db: Database.Database): TaskSession[] {
-  return db.prepare('SELECT * FROM task_sessions ORDER BY opened_at').all() as TaskSession[]
+  return db
+    .prepare('SELECT * FROM task_sessions ORDER BY opened_at')
+    .all() as TaskSession[]
 }
 
 export function update(
@@ -54,16 +66,22 @@ export function remove(db: Database.Database, id: number): boolean {
 
 /** Закрывает все сессии с closed_at = null (при выходе из приложения). */
 export function closeAllOpen(db: Database.Database, closedAt: string): number {
-  const result = db.prepare(
-    'UPDATE task_sessions SET closed_at = ? WHERE closed_at IS NULL'
-  ).run(closedAt)
+  const result = db
+    .prepare('UPDATE task_sessions SET closed_at = ? WHERE closed_at IS NULL')
+    .run(closedAt)
   return result.changes
 }
 
 /** Закрывает все открытые сессии по задаче (перед созданием новой — чтобы была только одна «текущая»). */
-export function closeOpenByTaskId(db: Database.Database, task_id: number, closedAt: string): number {
-  const result = db.prepare(
-    'UPDATE task_sessions SET closed_at = ? WHERE task_id = ? AND closed_at IS NULL'
-  ).run(closedAt, task_id)
+export function closeOpenByTaskId(
+  db: Database.Database,
+  task_id: number,
+  closedAt: string
+): number {
+  const result = db
+    .prepare(
+      'UPDATE task_sessions SET closed_at = ? WHERE task_id = ? AND closed_at IS NULL'
+    )
+    .run(closedAt, task_id)
   return result.changes
 }

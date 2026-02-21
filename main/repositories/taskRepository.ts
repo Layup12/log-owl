@@ -23,7 +23,9 @@ export function create(db: Database.Database, data: TaskInsert): Task {
 }
 
 export function getById(db: Database.Database, id: number): Task | null {
-  const row = db.prepare('SELECT * FROM tasks WHERE id = ?').get(id) as Task | undefined
+  const row = db.prepare('SELECT * FROM tasks WHERE id = ?').get(id) as
+    | Task
+    | undefined
   return row ?? null
 }
 

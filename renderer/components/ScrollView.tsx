@@ -5,7 +5,11 @@ import { Box } from '@renderer/shared/ui'
  * Область с собственным скроллом. Заполняет родителя (родитель должен иметь position: relative и заданную высоту).
  * Размер задаётся через position: absolute; inset: 0 — не зависит от flex.
  */
-export function ScrollView({ children, sx: _omitSx, ...rest }: React.ComponentProps<typeof Box>) {
+export function ScrollView({
+  children,
+  sx: _omitSx,
+  ...rest
+}: React.ComponentProps<typeof Box>) {
   return (
     <Box
       {...rest}

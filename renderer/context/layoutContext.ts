@@ -14,4 +14,6 @@ export const DEFAULT_LAYOUT_CONFIG: LayoutConfig = {
   title: 'Log Owl',
 }
 
-export const LayoutContext = createContext<LayoutContextValue | undefined>(undefined)
+export const LayoutContext = createContext<LayoutContextValue | undefined>(
+  undefined
+)

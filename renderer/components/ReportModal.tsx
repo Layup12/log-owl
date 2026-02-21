@@ -12,7 +12,14 @@ import {
   ListItem,
   CircularProgress,
 } from '@renderer/shared/ui'
-import { formatUtcLocal, datetimeLocalToUtcIso, mergeIntervals, clipIntervalsToRange, totalMinutesRoundedUp, type Interval } from '@renderer/shared/lib'
+import {
+  formatUtcLocal,
+  datetimeLocalToUtcIso,
+  mergeIntervals,
+  clipIntervalsToRange,
+  totalMinutesRoundedUp,
+  type Interval,
+} from '@renderer/shared/lib'
 import type { TimeEntry } from '@renderer/shared/types'
 import { getTimeEntriesInRange, getAllTasks } from '@renderer/api'
 
@@ -64,7 +71,9 @@ export function ReportModal({ open, onClose }: ReportModalProps) {
         getTimeEntriesInRange(fromIso, toIso),
         getAllTasks(),
       ])
-      const taskMap = new Map(tasks.map((t: { id: number; title?: string | null }) => [t.id, t]))
+      const taskMap = new Map(
+        tasks.map((t: { id: number; title?: string | null }) => [t.id, t])
+      )
       const byTask = new Map<number, TimeEntry[]>()
       for (const e of entries) {
         if (!byTask.has(e.task_id)) byTask.set(e.task_id, [])
@@ -97,12 +106,17 @@ export function ReportModal({ open, onClose }: ReportModalProps) {
   const reportContent = useMemo(() => {
     if (rows === null) return null
     if (rows.length === 0) {
-      return <Typography color="text.secondary">Нет данных за период</Typography>
+      return (
+        <Typography color="text.secondary">Нет данных за период</Typography>
+      )
     }
     return (
       <List dense disablePadding>
         {rows.map((r) => (
-          <ListItem key={r.taskId} sx={{ flexDirection: 'column', alignItems: 'stretch', py: 1.5 }}>
+          <ListItem
+            key={r.taskId}
+            sx={{ flexDirection: 'column', alignItems: 'stretch', py: 1.5 }}
+          >
             <Typography variant="subtitle2" fontWeight="medium">
               {r.taskTitle}
             </Typography>
@@ -115,9 +129,7 @@ export function ReportModal({ open, onClose }: ReportModalProps) {
                 </li>
               ))}
             </Box>
-            <Typography variant="body2">
-              Всего: {r.totalMinutes} мин
-            </Typography>
+            <Typography variant="body2">Всего: {r.totalMinutes} мин</Typography>
           </ListItem>
         ))}
       </List>
@@ -128,7 +140,15 @@ export function ReportModal({ open, onClose }: ReportModalProps) {
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>Отчёт</DialogTitle>
       <DialogContent sx={{ overflow: 'auto' }}>
-        <Box sx={{ pt: 3, display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'flex-end' }}>
+        <Box
+          sx={{
+            pt: 3,
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 2,
+            alignItems: 'flex-end',
+          }}
+        >
           <TextField
             label="С"
             type="datetime-local"

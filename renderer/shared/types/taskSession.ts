@@ -5,4 +5,3 @@ export interface TaskSession {
   closed_at: string | null
   last_seen: string | null
 }
-

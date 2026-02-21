@@ -23,13 +23,17 @@ function ensureDbMeta(db: Database.Database): void {
 
 function getCurrentVersion(db: Database.Database): number {
   ensureDbMeta(db)
-  const row = db.prepare('SELECT schema_version FROM db_meta LIMIT 1').get() as { schema_version: number } | undefined
+  const row = db.prepare('SELECT schema_version FROM db_meta LIMIT 1').get() as
+    | { schema_version: number }
+    | undefined
   return row?.schema_version ?? 0
 }
 
 export function runMigrations(db: Database.Database): void {
   const current = getCurrentVersion(db)
-  const pending = migrations.filter((m) => m.version > current).sort((a, b) => a.version - b.version)
+  const pending = migrations
+    .filter((m) => m.version > current)
+    .sort((a, b) => a.version - b.version)
   const setVersion = db.prepare('UPDATE db_meta SET schema_version = ?')
   for (const m of pending) {
     db.exec('BEGIN')

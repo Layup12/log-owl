@@ -3,7 +3,10 @@ import type { BrowserWindow } from 'electron'
 import { getDb } from '../db'
 import * as appStateRepo from '@main/repositories/appStateRepository'
 import { logWarn } from '@main/lib'
-import { WINDOW_BOUNDS_KEY, WINDOW_FULLSCREEN_KEY } from '../constants/appStateKeys'
+import {
+  WINDOW_BOUNDS_KEY,
+  WINDOW_FULLSCREEN_KEY,
+} from '../constants/appStateKeys'
 import { SAVE_DEBOUNCE_MS } from './constants'
 import { parseBounds } from './parseBounds'
 

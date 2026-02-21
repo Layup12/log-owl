@@ -29,13 +29,16 @@ export function registerTask(ipcMain: IpcMain, withDb: WithDb): void {
       withDb((db) => taskRepo.getById(db, id))
     )
   )
-  ipcMain.handle(TASK_GET_ALL, handleIpc(TASK_GET_ALL, () =>
-    withDb((db) => taskRepo.getAll(db))
-  ))
+  ipcMain.handle(
+    TASK_GET_ALL,
+    handleIpc(TASK_GET_ALL, () => withDb((db) => taskRepo.getAll(db)))
+  )
   ipcMain.handle(
     TASK_UPDATE,
-    validateAndHandle(TASK_UPDATE, [idSchema, taskUpdateSchema], (_, id, data) =>
-      withDb((db) => taskRepo.update(db, id, data))
+    validateAndHandle(
+      TASK_UPDATE,
+      [idSchema, taskUpdateSchema],
+      (_, id, data) => withDb((db) => taskRepo.update(db, id, data))
     )
   )
   ipcMain.handle(

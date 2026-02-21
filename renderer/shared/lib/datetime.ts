@@ -26,4 +26,3 @@ export function formatUtcLocal(iso: string): string {
     second: '2-digit',
   })
 }
-

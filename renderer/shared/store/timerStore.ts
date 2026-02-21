@@ -17,4 +17,3 @@ export const useTimerStore = create<TimerState>((set) => ({
   clearActive: () =>
     set({ activeEntryId: null, activeTaskId: null, startedAt: null }),
 }))
-

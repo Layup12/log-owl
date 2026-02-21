@@ -11,7 +11,8 @@ export function runRecovery(db: Database.Database): number[] {
   const openEntries = timeEntryRepo.getOpen(db)
   const closedIds: number[] = []
   if (openEntries.length === 0) return closedIds
-  const lastSeen = appStateRepo.get(db, LAST_SEEN_KEY) ?? new Date().toISOString()
+  const lastSeen =
+    appStateRepo.get(db, LAST_SEEN_KEY) ?? new Date().toISOString()
   for (const entry of openEntries) {
     timeEntryRepo.update(db, entry.id, { ended_at: lastSeen })
     closedIds.push(entry.id)

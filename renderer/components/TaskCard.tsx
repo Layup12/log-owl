@@ -7,7 +7,11 @@ import {
   IconButton,
   Tooltip,
 } from '@renderer/shared/ui'
-import { Check as CheckIcon, Close as CloseIcon, Delete as DeleteIcon } from '@mui/icons-material'
+import {
+  Check as CheckIcon,
+  Close as CloseIcon,
+  Delete as DeleteIcon,
+} from '@mui/icons-material'
 import { DeleteTaskConfirmDialog } from './DeleteTaskConfirmDialog'
 import { useTimerStore } from '@renderer/shared/store'
 import type { Task } from '@renderer/shared/types'
@@ -97,11 +101,15 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
               mt: 0.5,
             }}
           >
-            <Tooltip title={isCompleted ? 'Пометить активной' : 'Отметить выполненной'}>
+            <Tooltip
+              title={isCompleted ? 'Пометить активной' : 'Отметить выполненной'}
+            >
               <IconButton
                 size="small"
                 onClick={handleToggleCompleted}
-                aria-label={isCompleted ? 'Пометить активной' : 'Отметить выполненной'}
+                aria-label={
+                  isCompleted ? 'Пометить активной' : 'Отметить выполненной'
+                }
               >
                 {isCompleted ? (
                   <CloseIcon fontSize="small" />

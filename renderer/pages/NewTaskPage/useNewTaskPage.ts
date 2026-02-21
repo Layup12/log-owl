@@ -35,4 +35,3 @@ export function useNewTaskPage(): UseNewTaskPageResult {
     goToList: () => navigate('/'),
   }
 }
-

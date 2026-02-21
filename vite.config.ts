@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   server: {
-    port: 5173
+    port: 5173,
   },
   resolve: {
     alias: {
@@ -30,12 +30,18 @@ export default defineConfig({
       '@renderer/hooks': path.resolve(__dirname, './renderer/hooks'),
       '@renderer/shared/ui': path.resolve(__dirname, './renderer/shared/ui'),
       '@renderer/shared/lib': path.resolve(__dirname, './renderer/shared/lib'),
-      '@renderer/shared/store': path.resolve(__dirname, './renderer/shared/store'),
-      '@renderer/shared/types': path.resolve(__dirname, './renderer/shared/types')
-    }
+      '@renderer/shared/store': path.resolve(
+        __dirname,
+        './renderer/shared/store'
+      ),
+      '@renderer/shared/types': path.resolve(
+        __dirname,
+        './renderer/shared/types'
+      ),
+    },
   },
   test: {
     globals: true,
-    environment: 'node'
-  }
+    environment: 'node',
+  },
 })
