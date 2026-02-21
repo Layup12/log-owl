@@ -30,7 +30,16 @@ function getCurrentVersion(db: Database.Database): number {
 export function runMigrations(db: Database.Database): void {
   const current = getCurrentVersion(db)
   const pending = migrations.filter((m) => m.version > current).sort((a, b) => a.version - b.version)
+  const setVersion = db.prepare('UPDATE db_meta SET schema_version = ?')
   for (const m of pending) {
-    m.up(db)
+    db.exec('BEGIN')
+    try {
+      m.up(db)
+      setVersion.run(m.version)
+      db.exec('COMMIT')
+    } catch (e) {
+      db.exec('ROLLBACK')
+      throw e
+    }
   }
 }

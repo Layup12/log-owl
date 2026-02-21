@@ -44,5 +44,4 @@ export function up(db: Database.Database): void {
       value TEXT
     );
   `)
-  db.prepare('UPDATE db_meta SET schema_version = ?').run(version)
 }

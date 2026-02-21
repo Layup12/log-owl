@@ -1,4 +1,6 @@
 import type { TaskSession } from '@shared/types'
+import type { IpcResponse } from './ipcResponse'
+import { unwrapIpcResponse } from './ipcResponse'
 
 export interface CreateTaskSessionInput {
   taskId: number
@@ -15,7 +17,8 @@ export interface UpdateTaskSessionInput {
 }
 
 export async function getTaskSessionsByTaskId(taskId: number): Promise<TaskSession[]> {
-  const list = (await window.electron.invoke('taskSession:getByTaskId', taskId)) as TaskSession[]
+  const response = (await window.electron.invoke('taskSession:getByTaskId', taskId)) as IpcResponse<TaskSession[]>
+  const list = unwrapIpcResponse(response)
   return Array.isArray(list) ? list : []
 }
 
@@ -26,8 +29,8 @@ export async function createTaskSession(input: CreateTaskSessionInput): Promise<
     closed_at: input.closedAt ?? null,
     last_seen: input.lastSeen ?? null,
   }
-  const session = (await window.electron.invoke('taskSession:create', payload)) as TaskSession
-  return session
+  const response = (await window.electron.invoke('taskSession:create', payload)) as IpcResponse<TaskSession>
+  return unwrapIpcResponse(response)
 }
 
 export async function updateTaskSession(id: number, input: UpdateTaskSessionInput): Promise<void> {
@@ -41,14 +44,16 @@ export async function updateTaskSession(id: number, input: UpdateTaskSessionInpu
   if (input.openedAt !== undefined) payload.opened_at = input.openedAt
   if (input.closedAt !== undefined) payload.closed_at = input.closedAt
   if (input.lastSeen !== undefined) payload.last_seen = input.lastSeen
-  await window.electron.invoke('taskSession:update', id, payload)
+  const response = (await window.electron.invoke('taskSession:update', id, payload)) as IpcResponse<void>
+  unwrapIpcResponse(response)
 }
 
 export async function deleteTaskSession(id: number): Promise<void> {
-  await window.electron.invoke('taskSession:delete', id)
+  const response = (await window.electron.invoke('taskSession:delete', id)) as IpcResponse<boolean>
+  unwrapIpcResponse(response)
 }
 
 export async function closeOpenTaskSessionsByTaskId(taskId: number): Promise<void> {
-  await window.electron.invoke('taskSession:closeOpenByTaskId', taskId)
+  const response = (await window.electron.invoke('taskSession:closeOpenByTaskId', taskId)) as IpcResponse<number>
+  unwrapIpcResponse(response)
 }
-

@@ -22,6 +22,17 @@ export function getDb(userDataPath: string): Database.Database {
   return db
 }
 
+/**
+ * Выполняет fn с подключением к БД для указанного userDataPath.
+ * Удобно для IPC-handlers: один вызов withDb(path, fn) вместо getDb + fn(getDb(...)).
+ */
+export function withDb<T>(
+  userDataPath: string,
+  fn: (database: Database.Database) => T
+): T {
+  return fn(getDb(userDataPath))
+}
+
 export function closeDb(): void {
   if (db) {
     db.close()
