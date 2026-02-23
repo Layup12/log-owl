@@ -1,14 +1,15 @@
 import {
   Box,
-  Typography,
+  Button,
   List,
   ListItem,
-  ListItemText,
   ListItemSecondaryAction,
-  Button,
+  ListItemText,
+  Typography,
 } from '@renderer/shared/ui'
-import type { TaskPageState, TaskPageHandlers } from '../useTaskPage'
 import dayjs from 'dayjs'
+
+import type { TaskPageHandlers, TaskPageState } from '../useTaskPage'
 
 interface SessionsSectionProps {
   state: TaskPageState & TaskPageHandlers

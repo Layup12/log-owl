@@ -1,8 +1,8 @@
 import {
-  DEFAULT_WIDTH,
   DEFAULT_HEIGHT,
-  MIN_WIDTH,
+  DEFAULT_WIDTH,
   MIN_HEIGHT,
+  MIN_WIDTH,
 } from './constants'
 
 export interface ParsedBounds {

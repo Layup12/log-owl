@@ -1,6 +1,7 @@
 import type Database from 'better-sqlite3'
-import { version as v1, up as up1 } from './001_init_schema'
-import { version as v2, up as up2 } from './002_time_entries_source'
+
+import { up as up1, version as v1 } from './001_init_schema'
+import { up as up2, version as v2 } from './002_time_entries_source'
 
 export interface Migration {
   version: number

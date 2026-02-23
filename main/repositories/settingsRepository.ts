@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3'
+
 import type { Setting } from '../types'
 
 export function get(db: Database.Database, key: string): string | null {

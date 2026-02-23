@@ -1,27 +1,28 @@
 import {
-  Box,
-  Typography,
-  TextField,
-  Button,
+  Close as CloseIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Save as SaveIcon,
+} from '@mui/icons-material'
+import { formatUtcLocal } from '@renderer/shared/lib'
+import {
   Alert,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
   List,
   ListItem,
-  ListItemText,
   ListItemSecondaryAction,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  ListItemText,
+  TextField,
+  Typography,
 } from '@renderer/shared/ui'
-import {
-  Save as SaveIcon,
-  Close as CloseIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-} from '@mui/icons-material'
-import type { TaskPageState, TaskPageHandlers } from '../useTaskPage'
-import { formatUtcLocal } from '@renderer/shared/lib'
+
+import type { TaskPageHandlers, TaskPageState } from '../useTaskPage'
 
 interface IntervalsSectionProps {
   state: TaskPageState & TaskPageHandlers

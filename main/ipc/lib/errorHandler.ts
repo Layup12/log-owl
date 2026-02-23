@@ -1,7 +1,7 @@
+import type { IpcResponse } from '@contracts'
+import { logError } from '@main/lib'
 import type { IpcMainInvokeEvent } from 'electron'
 import type { ZodType } from 'zod'
-import { logError } from '@main/lib'
-import type { IpcResponse } from '@contracts'
 
 export type {
   IpcErrorResponse,

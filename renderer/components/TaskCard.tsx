@@ -1,21 +1,22 @@
-import React, { useState } from 'react'
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  Tooltip,
-} from '@renderer/shared/ui'
 import {
   Check as CheckIcon,
   Close as CloseIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material'
-import { DeleteTaskConfirmDialog } from './DeleteTaskConfirmDialog'
+import { deleteTask, updateTask } from '@renderer/api'
 import { useTimerStore } from '@renderer/shared/store'
 import type { Task } from '@renderer/shared/types'
-import { deleteTask, updateTask } from '@renderer/api'
+import {
+  Box,
+  Card,
+  CardContent,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@renderer/shared/ui'
+import React, { useState } from 'react'
+
+import { DeleteTaskConfirmDialog } from './DeleteTaskConfirmDialog'
 
 interface TaskCardProps {
   task: Task

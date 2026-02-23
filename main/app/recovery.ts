@@ -1,7 +1,8 @@
 import type Database from 'better-sqlite3'
+
+import { LAST_SEEN_KEY } from '../constants/appStateKeys'
 import * as appStateRepo from '../repositories/appStateRepository'
 import * as timeEntryRepo from '../repositories/timeEntryRepository'
-import { LAST_SEEN_KEY } from '../constants/appStateKeys'
 
 /**
  * Закрывает все открытые time_entries значением last_seen (или текущим временем).

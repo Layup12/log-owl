@@ -1,2 +1,2 @@
-export * from './timerStore'
 export * from './themeStore'
+export * from './timerStore'

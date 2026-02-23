@@ -1,6 +1,6 @@
+import type { RecoveryInfo } from '@contracts'
 import { APP_GET_RECOVERY_INFO } from '@contracts'
 import { unwrapIpcResponse } from '@contracts'
-import type { RecoveryInfo } from '@contracts'
 
 export type { RecoveryInfo }
 

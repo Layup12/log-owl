@@ -1,4 +1,3 @@
-import type { IpcMain } from 'electron'
 import {
   TIME_ENTRY_CREATE,
   TIME_ENTRY_DELETE,
@@ -7,13 +6,15 @@ import {
   TIME_ENTRY_GET_BY_TASK_ID,
   TIME_ENTRY_UPDATE,
 } from '@contracts'
+import type { IpcMain } from 'electron'
+
 import * as timeEntryRepo from '../repositories/timeEntryRepository'
 import {
   handleIpc,
-  validateAndHandle,
   idSchema,
   timeEntryInsertSchema,
   timeEntryUpdateSchema,
+  validateAndHandle,
   type WithDb,
 } from './lib'
 

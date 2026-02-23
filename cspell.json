@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "language": "en,ru",
+  "import": ["cspell-dict-ru_ru/cspell-ext.json"],
+  "words": [
+    "хендлер",
+    "хендлера",
+    "хендлеров",
+    "провалидированными",
+    "логирует",
+    "рендереру",
+    "Валидирует",
+    "хелперы",
+    "плейсхолдер"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "dist-electron",
+    "release",
+    "docs/*.md",
+    "main/migrations/**",
+    "**/*.lock",
+    "**.yaml",
+    "package-lock.json",
+    "electron-builder.json"
+  ]
+}

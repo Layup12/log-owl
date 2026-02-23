@@ -1,9 +1,9 @@
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from '@renderer/shared/ui'
 
 interface RecoveryModalProps {

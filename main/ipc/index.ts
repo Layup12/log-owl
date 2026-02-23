@@ -1,12 +1,13 @@
-import { app, ipcMain } from 'electron'
 import { withDb as withDbForPath } from '@main/db'
-import { registerTask } from './task'
-import { registerTimeEntry } from './timeEntry'
-import { registerTaskSession } from './taskSession'
-import { registerSettings } from './settings'
-import { registerReport } from './report'
+import { app, ipcMain } from 'electron'
+
 import { registerApp } from './app'
 import type { WithDb } from './lib'
+import { registerReport } from './report'
+import { registerSettings } from './settings'
+import { registerTask } from './task'
+import { registerTaskSession } from './taskSession'
+import { registerTimeEntry } from './timeEntry'
 
 export function registerIpc(): void {
   const userDataPath = app.getPath('userData')

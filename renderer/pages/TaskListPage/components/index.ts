@@ -1,2 +1,2 @@
-export * from './TaskGrid'
 export * from './CompletedTasksSection'
+export * from './TaskGrid'

@@ -1,27 +1,27 @@
-import { useMemo, useState } from 'react'
+import { getAllTasks, getTimeEntriesInRange } from '@renderer/api'
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  Typography,
-  Box,
-  List,
-  ListItem,
-  CircularProgress,
-} from '@renderer/shared/ui'
-import {
-  formatUtcLocal,
-  datetimeLocalToUtcIso,
-  mergeIntervals,
   clipIntervalsToRange,
-  totalMinutesRoundedUp,
+  datetimeLocalToUtcIso,
+  formatUtcLocal,
   type Interval,
+  mergeIntervals,
+  totalMinutesRoundedUp,
 } from '@renderer/shared/lib'
 import type { TimeEntry } from '@renderer/shared/types'
-import { getTimeEntriesInRange, getAllTasks } from '@renderer/api'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  List,
+  ListItem,
+  TextField,
+  Typography,
+} from '@renderer/shared/ui'
+import { useMemo, useState } from 'react'
 
 interface ReportRow {
   taskId: number

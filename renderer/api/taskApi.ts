@@ -1,4 +1,3 @@
-import type { Task } from '@renderer/shared/types'
 import {
   TASK_CREATE,
   TASK_DELETE,
@@ -7,6 +6,7 @@ import {
   TASK_UPDATE,
   unwrapIpcResponse,
 } from '@contracts'
+import type { Task } from '@renderer/shared/types'
 
 export interface CreateTaskInput {
   title: string

@@ -1,8 +1,8 @@
+export type { WindowState } from './state'
 export {
-  setMainWindow,
   loadWindowState,
+  onWindowClosing,
   saveWindowState,
   scheduleSaveWindowState,
-  onWindowClosing,
+  setMainWindow,
 } from './state'
-export type { WindowState } from './state'

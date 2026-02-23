@@ -1,15 +1,16 @@
-import type { IpcMain } from 'electron'
 import {
   SETTINGS_DELETE,
   SETTINGS_GET,
   SETTINGS_GET_ALL,
   SETTINGS_SET,
 } from '@contracts'
+import type { IpcMain } from 'electron'
+
 import * as settingsRepo from '../repositories/settingsRepository'
 import {
   handleIpc,
-  validateAndHandle,
   keySchema,
+  validateAndHandle,
   valueSchema,
   type WithDb,
 } from './lib'

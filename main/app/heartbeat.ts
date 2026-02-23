@@ -1,6 +1,7 @@
-import { app } from 'electron'
 import { getDb } from '@main/db'
 import * as appStateRepo from '@main/repositories/appStateRepository'
+import { app } from 'electron'
+
 import { LAST_SEEN_KEY } from '../constants/appStateKeys'
 
 const HEARTBEAT_INTERVAL_MS = 45 * 1000

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
-import type { Task } from '@renderer/shared/types'
 import { getAllTasks } from '@renderer/api'
+import type { Task } from '@renderer/shared/types'
+import { useCallback, useEffect, useState } from 'react'
 
 interface UseTaskListPageResult {
   tasks: Task[]

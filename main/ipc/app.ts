@@ -1,5 +1,6 @@
-import type { IpcMain } from 'electron'
 import { APP_GET_RECOVERY_INFO } from '@contracts'
+import type { IpcMain } from 'electron'
+
 import { handleIpc } from './lib'
 
 let recoveryClosedIds: number[] = []

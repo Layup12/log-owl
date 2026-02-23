@@ -1,7 +1,8 @@
-import { Routes, Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
+
+import { NewTaskPage } from '../pages/NewTaskPage/NewTaskPage'
 import { TaskListPage } from '../pages/TaskListPage/TaskListPage'
 import { TaskPage } from '../pages/TaskPage/TaskPage'
-import { NewTaskPage } from '../pages/NewTaskPage/NewTaskPage'
 
 export function AppRoutes() {
   return (

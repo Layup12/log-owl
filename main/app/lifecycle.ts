@@ -1,8 +1,9 @@
-import { app } from 'electron'
-import { getDb, closeDb } from '@main/db'
-import { saveWindowState } from '../windowState'
+import { closeDb, getDb } from '@main/db'
 import { logWarn } from '@main/lib'
+import { app } from 'electron'
+
 import * as taskSessionRepo from '../repositories/taskSessionRepository'
+import { saveWindowState } from '../windowState'
 
 /**
  * Регистрирует обработчики жизненного цикла приложения: before-quit и window-all-closed.

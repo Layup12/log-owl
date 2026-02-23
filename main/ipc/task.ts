@@ -1,4 +1,3 @@
-import type { IpcMain } from 'electron'
 import {
   TASK_CREATE,
   TASK_DELETE,
@@ -6,13 +5,15 @@ import {
   TASK_GET_BY_ID,
   TASK_UPDATE,
 } from '@contracts'
+import type { IpcMain } from 'electron'
+
 import * as taskRepo from '../repositories/taskRepository'
 import {
   handleIpc,
-  validateAndHandle,
   idSchema,
   taskInsertSchema,
   taskUpdateSchema,
+  validateAndHandle,
   type WithDb,
 } from './lib'
 

@@ -1,13 +1,13 @@
-import {
-  Box,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from '@renderer/shared/ui'
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
 import { TaskCard } from '@renderer/components'
 import type { Task } from '@renderer/shared/types'
-import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Typography,
+} from '@renderer/shared/ui'
 
 interface CompletedTasksSectionProps {
   tasks: Task[]

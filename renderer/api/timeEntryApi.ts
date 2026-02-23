@@ -1,4 +1,3 @@
-import type { TimeEntry } from '@renderer/shared/types'
 import {
   TIME_ENTRY_CREATE,
   TIME_ENTRY_DELETE,
@@ -6,6 +5,7 @@ import {
   TIME_ENTRY_UPDATE,
   unwrapIpcResponse,
 } from '@contracts'
+import type { TimeEntry } from '@renderer/shared/types'
 
 export interface CreateTimeEntryInput {
   taskId: number

@@ -1,1 +1,1 @@
-export { isDev, logDev, logWarn, logError } from './logger'
+export { isDev, logDev, logError, logWarn } from './logger'

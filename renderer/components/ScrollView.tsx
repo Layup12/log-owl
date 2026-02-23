@@ -1,10 +1,6 @@
-import React from 'react'
 import { Box } from '@renderer/shared/ui'
+import React from 'react'
 
-/**
- * Область с собственным скроллом. Заполняет родителя (родитель должен иметь position: relative и заданную высоту).
- * Размер задаётся через position: absolute; inset: 0 — не зависит от flex.
- */
 export function ScrollView({
   children,
   sx: _omitSx,

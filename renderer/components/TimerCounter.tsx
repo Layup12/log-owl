@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import { Typography } from '@renderer/shared/ui'
+import { useEffect, useState } from 'react'
 
 interface TimerCounterProps {
   startedAt: string // ISO UTC

@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3'
+
 import type { TaskSession, TaskSessionInsert } from '../types'
 
 export function create(

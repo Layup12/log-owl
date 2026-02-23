@@ -1,24 +1,25 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import {
-  Box,
-  TextField,
-  CircularProgress,
-  Alert,
-  IconButton,
-  Tooltip,
-  Tabs,
-  Tab,
-  useMediaQuery,
-} from '@renderer/shared/ui'
-import {
-  PlayArrow as PlayIcon,
-  Pause as PauseIcon,
   Delete as DeleteIcon,
+  Pause as PauseIcon,
+  PlayArrow as PlayIcon,
 } from '@mui/icons-material'
 import { useTheme } from '@mui/material/styles'
-import { TimerCounter, DeleteTaskConfirmDialog } from '@renderer/components'
+import { DeleteTaskConfirmDialog, TimerCounter } from '@renderer/components'
 import { useLayoutOptions } from '@renderer/hooks'
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  IconButton,
+  Tab,
+  Tabs,
+  TextField,
+  Tooltip,
+  useMediaQuery,
+} from '@renderer/shared/ui'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 import { AddIntervalForm, IntervalsList, SessionsSection } from './components'
 import { useTaskPage } from './useTaskPage'
 

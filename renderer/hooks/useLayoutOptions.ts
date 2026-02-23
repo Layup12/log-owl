@@ -1,6 +1,6 @@
-import { useContext, useLayoutEffect } from 'react'
-import { LayoutContext } from '@renderer/context'
 import type { LayoutConfig } from '@renderer/context'
+import { LayoutContext } from '@renderer/context'
+import { useContext, useLayoutEffect } from 'react'
 
 export function useLayoutOptions(options: LayoutConfig) {
   const context = useContext(LayoutContext)

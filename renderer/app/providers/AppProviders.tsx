@@ -1,6 +1,7 @@
 import React from 'react'
-import { AppThemeProvider } from './ThemeProvider'
+
 import { AppRouterProvider } from './RouterProvider'
+import { AppThemeProvider } from './ThemeProvider'
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (

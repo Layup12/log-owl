@@ -1,5 +1,5 @@
+import { DEFAULT_LAYOUT_CONFIG, LayoutContext } from '@renderer/context'
 import { useState } from 'react'
-import { LayoutContext, DEFAULT_LAYOUT_CONFIG } from '@renderer/context'
 
 export function LayoutProvider({ children }: { children: React.ReactNode }) {
   const [config, setConfig] = useState(DEFAULT_LAYOUT_CONFIG)

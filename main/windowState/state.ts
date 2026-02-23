@@ -1,12 +1,13 @@
-import { app } from 'electron'
-import type { BrowserWindow } from 'electron'
-import { getDb } from '../db'
-import * as appStateRepo from '@main/repositories/appStateRepository'
 import { logWarn } from '@main/lib'
+import * as appStateRepo from '@main/repositories/appStateRepository'
+import type { BrowserWindow } from 'electron'
+import { app } from 'electron'
+
 import {
   WINDOW_BOUNDS_KEY,
   WINDOW_FULLSCREEN_KEY,
 } from '../constants/appStateKeys'
+import { getDb } from '../db'
 import { SAVE_DEBOUNCE_MS } from './constants'
 import { parseBounds } from './parseBounds'
 

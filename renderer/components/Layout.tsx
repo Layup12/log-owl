@@ -1,5 +1,11 @@
-import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import {
+  ArrowBack as ArrowBackIcon,
+  Assessment as ReportIcon,
+  DarkMode as DarkModeIcon,
+  LightMode as LightModeIcon,
+} from '@mui/icons-material'
+import { useLayoutHeader } from '@renderer/hooks'
+import { useThemeStore } from '@renderer/shared/store'
 import {
   AppBar,
   Box,
@@ -9,15 +15,10 @@ import {
   Tooltip,
   Typography,
 } from '@renderer/shared/ui'
-import {
-  DarkMode as DarkModeIcon,
-  LightMode as LightModeIcon,
-  Assessment as ReportIcon,
-  ArrowBack as ArrowBackIcon,
-} from '@mui/icons-material'
-import { useThemeStore } from '@renderer/shared/store'
+import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
 import { ReportModal } from './ReportModal'
-import { useLayoutHeader } from '@renderer/hooks'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { mode, toggleMode } = useThemeStore()

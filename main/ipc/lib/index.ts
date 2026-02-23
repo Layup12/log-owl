@@ -1,9 +1,9 @@
 export {
   handleIpc,
-  validateAndHandle,
+  type IpcErrorResponse,
   type IpcResponse,
   type IpcSuccessResponse,
-  type IpcErrorResponse,
+  validateAndHandle,
 } from './errorHandler'
 export * from './schemas'
 export type { WithDb } from './types'

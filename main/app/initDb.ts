@@ -1,11 +1,12 @@
-import path from 'path'
-import { app } from 'electron'
 import { getDb } from '@main/db'
-import { verifyDbConnection } from '../db/verifyDbConnection'
-import { runMigrations } from '../migrations/runner'
-import { setRecoveryClosedIds } from '../ipc/app'
-import { runRecovery } from './recovery'
 import { logDev } from '@main/lib'
+import { app } from 'electron'
+import path from 'path'
+
+import { verifyDbConnection } from '../db/verifyDbConnection'
+import { setRecoveryClosedIds } from '../ipc/app'
+import { runMigrations } from '../migrations/runner'
+import { runRecovery } from './recovery'
 
 /**
  * Инициализация БД: миграции, проверка доступа, recovery открытых time_entries.

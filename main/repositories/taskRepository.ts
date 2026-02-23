@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3'
+
 import type { Task, TaskInsert } from '../types'
 
 function now(): string {

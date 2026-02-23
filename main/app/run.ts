@@ -1,9 +1,10 @@
-import { app, BrowserWindow } from 'electron'
-import { registerIpc } from '../ipc'
-import { initDb } from './initDb'
-import { startHeartbeat } from './heartbeat'
-import { createWindow } from './window'
 import { logDev } from '@main/lib'
+import { app, BrowserWindow } from 'electron'
+
+import { registerIpc } from '../ipc'
+import { startHeartbeat } from './heartbeat'
+import { initDb } from './initDb'
+import { createWindow } from './window'
 
 /**
  * Запуск приложения после app.whenReady(): БД, IPC, окно, heartbeat, обработчик activate.

@@ -1,5 +1,5 @@
-import type { TimeEntry } from '@renderer/shared/types'
 import { REPORT_GET_TIME_ENTRIES_IN_RANGE, unwrapIpcResponse } from '@contracts'
+import type { TimeEntry } from '@renderer/shared/types'
 
 export async function getTimeEntriesInRange(
   fromIso: string,

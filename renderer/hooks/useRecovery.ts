@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import { getRecoveryInfo } from '@renderer/api'
+import { useEffect, useState } from 'react'
 
 export function useRecovery() {
   const [recoveryModalOpen, setRecoveryModalOpen] = useState(false)

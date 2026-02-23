@@ -1,4 +1,5 @@
-import { Box, CircularProgress, Alert, Button } from '@renderer/shared/ui'
+import { Alert, Box, Button, CircularProgress } from '@renderer/shared/ui'
+
 import { useNewTaskPage } from './useNewTaskPage'
 
 export function NewTaskPage() {

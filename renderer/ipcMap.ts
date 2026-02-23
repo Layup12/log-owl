@@ -1,6 +1,6 @@
-import type { Task, TaskSession, TimeEntry } from '@renderer/shared/types'
-import { CHANNELS, type IpcChannelName } from '@contracts'
 import type { RecoveryInfo } from '@contracts'
+import { CHANNELS, type IpcChannelName } from '@contracts'
+import type { Task, TaskSession, TimeEntry } from '@renderer/shared/types'
 
 export interface TaskCreatePayload {
   title: string

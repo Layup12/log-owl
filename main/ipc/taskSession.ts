@@ -1,4 +1,3 @@
-import type { IpcMain } from 'electron'
 import {
   TASK_SESSION_CLOSE_OPEN_BY_TASK_ID,
   TASK_SESSION_CREATE,
@@ -8,13 +7,15 @@ import {
   TASK_SESSION_GET_BY_TASK_ID,
   TASK_SESSION_UPDATE,
 } from '@contracts'
+import type { IpcMain } from 'electron'
+
 import * as taskSessionRepo from '../repositories/taskSessionRepository'
 import {
   handleIpc,
-  validateAndHandle,
   idSchema,
   taskSessionInsertSchema,
   taskSessionUpdateSchema,
+  validateAndHandle,
   type WithDb,
 } from './lib'
 

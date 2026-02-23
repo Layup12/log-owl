@@ -1,13 +1,14 @@
-import path from 'path'
+import { isDev } from '@main/lib'
 import { BrowserWindow } from 'electron'
+import path from 'path'
+
 import {
   loadWindowState,
-  setMainWindow,
+  onWindowClosing,
   saveWindowState,
   scheduleSaveWindowState,
-  onWindowClosing,
+  setMainWindow,
 } from '../windowState'
-import { isDev } from '@main/lib'
 
 /**
  * Создаёт главное окно приложения: загружает сохранённое состояние,

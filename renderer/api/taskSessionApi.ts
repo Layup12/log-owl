@@ -1,4 +1,3 @@
-import type { TaskSession } from '@renderer/shared/types'
 import {
   TASK_SESSION_CLOSE_OPEN_BY_TASK_ID,
   TASK_SESSION_CREATE,
@@ -7,6 +6,7 @@ import {
   TASK_SESSION_UPDATE,
   unwrapIpcResponse,
 } from '@contracts'
+import type { TaskSession } from '@renderer/shared/types'
 
 export interface CreateTaskSessionInput {
   taskId: number

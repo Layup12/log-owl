@@ -1,7 +1,7 @@
-import React from 'react'
-import { Box, Card, CardContent, SvgIcon } from '@renderer/shared/ui'
 import { TaskCard } from '@renderer/components'
 import type { Task } from '@renderer/shared/types'
+import { Box, Card, CardContent, SvgIcon } from '@renderer/shared/ui'
+import React from 'react'
 
 interface TaskGridProps {
   tasks: Task[]

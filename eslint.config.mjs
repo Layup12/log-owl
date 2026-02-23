@@ -2,6 +2,8 @@ import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
+import importPlugin from 'eslint-plugin-import'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import prettierConfig from 'eslint-config-prettier'
 import globals from 'globals'
 
@@ -23,6 +25,24 @@ export default tseslint.config(
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+    },
+  },
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+      import: importPlugin,
+    },
+    rules: {
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'import/no-default-export': 'error',
+    },
+  },
+  {
+    files: ['vite.config.ts'],
+    rules: {
+      'import/no-default-export': 'off',
     },
   },
   {
