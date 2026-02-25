@@ -18,7 +18,7 @@ export function setMainWindow(win: BrowserWindow | null): void {
   mainWindowRef = win
 }
 
-export interface WindowState {
+interface WindowState {
   width: number
   height: number
   x?: number

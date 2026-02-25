@@ -3,12 +3,6 @@ import { logError } from '@main/lib'
 import type { IpcMainInvokeEvent } from 'electron'
 import type { ZodType } from 'zod'
 
-export type {
-  IpcErrorResponse,
-  IpcResponse,
-  IpcSuccessResponse,
-} from '@contracts'
-
 /** Форматирует ошибку Zod в читаемую строку для ответа рендереру. */
 function formatZodError(error: {
   issues: Array<{ path: unknown[]; message: string }>

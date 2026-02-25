@@ -2,50 +2,50 @@ import type { RecoveryInfo } from '@contracts'
 import { CHANNELS, type IpcChannelName } from '@contracts'
 import type { Task, TaskSession, TimeEntry } from '@renderer/shared/types'
 
-export interface TaskCreatePayload {
+interface TaskCreatePayload {
   title: string
   comment: string | null
   completed_at: string | null
 }
 
-export interface TaskUpdatePayload {
+interface TaskUpdatePayload {
   title?: string
   comment?: string | null
   completed_at?: string | null
 }
 
-export interface TaskSessionCreatePayload {
+interface TaskSessionCreatePayload {
   task_id: number
   opened_at: string
   closed_at: string | null
   last_seen: string | null
 }
 
-export interface TaskSessionUpdatePayload {
+interface TaskSessionUpdatePayload {
   task_id?: number
   opened_at?: string
   closed_at?: string | null
   last_seen?: string | null
 }
 
-export interface TimeEntryCreatePayload {
+interface TimeEntryCreatePayload {
   task_id: number
   started_at: string
   ended_at: string | null
   source: string | null
 }
 
-export interface TimeEntryUpdatePayload {
+interface TimeEntryUpdatePayload {
   started_at?: string
   ended_at?: string | null
 }
 
-export interface TimeEntryCreateResult {
+interface TimeEntryCreateResult {
   id: number
   started_at: string
 }
 
-export interface SettingsGetAllResult {
+interface SettingsGetAllResult {
   key: string
   value: string
 }

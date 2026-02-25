@@ -11,7 +11,8 @@
     "рендереру",
     "Валидирует",
     "хелперы",
-    "плейсхолдер"
+    "плейсхолдер",
+    "treemap"
   ],
   "ignorePaths": [
     "node_modules",
@@ -21,8 +22,10 @@
     "docs/*.md",
     "main/migrations/**",
     "**/*.lock",
-    "**.yaml",
+    "*.yaml",
+    "*.yml",
     "package-lock.json",
-    "electron-builder.json"
+    "electron-builder.json",
+    "README.md"
   ]
 }

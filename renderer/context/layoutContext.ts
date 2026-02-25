@@ -5,7 +5,7 @@ export interface LayoutConfig {
   onBack?: () => void
 }
 
-export interface LayoutContextValue {
+interface LayoutContextValue {
   config: LayoutConfig
   setConfig: Dispatch<SetStateAction<LayoutConfig>>
 }

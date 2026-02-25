@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type ThemeMode = 'light' | 'dark'
+type ThemeMode = 'light' | 'dark'
 
 const STORAGE_KEY = 'theme'
 

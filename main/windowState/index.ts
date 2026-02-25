@@ -1,4 +1,3 @@
-export type { WindowState } from './state'
 export {
   loadWindowState,
   onWindowClosing,

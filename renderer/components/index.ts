@@ -1,6 +1,5 @@
 export { DeleteTaskConfirmDialog } from './DeleteTaskConfirmDialog'
 export { Layout } from './Layout'
 export { RecoveryModal } from './RecoveryModal'
-export { ReportModal } from './ReportModal'
 export { TaskCard } from './TaskCard'
 export { TimerCounter } from './TimerCounter'

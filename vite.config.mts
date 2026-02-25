@@ -1,9 +1,25 @@
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vitest/config'
 
+const shouldAnalyze = process.env.ANALYZE === 'true'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    shouldAnalyze &&
+      visualizer({
+        filename: 'dist/stats.html',
+        template: 'treemap',
+        gzipSize: true,
+        brotliSize: true,
+      }),
+  ].filter(Boolean),
   base: './',
   server: {
     port: 5173,
@@ -25,7 +41,10 @@ export default defineConfig({
       // @renderer
       '@renderer': path.resolve(__dirname, './renderer'),
       '@renderer/api': path.resolve(__dirname, './renderer/api'),
-      '@renderer/components': path.resolve(__dirname, './renderer/components'),
+      '@renderer/components': path.resolve(
+        __dirname,
+        './renderer/components'
+      ),
       '@renderer/context': path.resolve(__dirname, './renderer/context'),
       '@renderer/hooks': path.resolve(__dirname, './renderer/hooks'),
       '@renderer/shared/ui': path.resolve(__dirname, './renderer/shared/ui'),
@@ -45,3 +64,4 @@ export default defineConfig({
     environment: 'node',
   },
 })
+

@@ -209,14 +209,3 @@ export function IntervalsList({ state }: IntervalsSectionProps) {
     </>
   )
 }
-
-export function IntervalsSection({ state }: IntervalsSectionProps) {
-  return (
-    <>
-      <AddIntervalForm state={state} />
-      <Box sx={{ mt: 2 }}>
-        <IntervalsList state={state} />
-      </Box>
-    </>
-  )
-}

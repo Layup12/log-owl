@@ -5,7 +5,7 @@ import {
   MIN_WIDTH,
 } from './constants'
 
-export interface ParsedBounds {
+interface ParsedBounds {
   width: number
   height: number
   x?: number
