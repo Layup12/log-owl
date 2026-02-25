@@ -16,18 +16,13 @@ import {
   Typography,
 } from '@renderer/shared/ui'
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 
-import { ReportModal } from './ReportModal'
+import { ReportModal } from '../ReportModal'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { mode, toggleMode } = useThemeStore()
   const [reportOpen, setReportOpen] = useState(false)
-  const location = useLocation()
-  const isTaskDetailPage =
-    /^\/task\/[^/]+$/.test(location.pathname) &&
-    location.pathname !== '/task/new'
-  const { title, onBack } = useLayoutHeader()
+  const { title, onBack, showReportFab } = useLayoutHeader()
 
   return (
     <Box
@@ -97,7 +92,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </Box>
       </Box>
-      {!isTaskDetailPage && (
+      {showReportFab && (
         <Tooltip title="Отчёт">
           <Fab
             color="primary"

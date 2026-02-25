@@ -10,7 +10,7 @@ export function TaskListPage() {
   const navigate = useNavigate()
   const { tasks, loading, error, setError, reload } = useTaskListPage()
   const [completedOpen, setCompletedOpen] = useState(false)
-  useLayoutOptions({ title: 'Задачи' })
+  useLayoutOptions({ title: 'Задачи', showReportFab: true })
 
   const activeTasks = tasks.filter((t) => !t.completed_at)
   const completedTasks = tasks.filter((t) => t.completed_at)

@@ -9,6 +9,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
+    "types": ["vitest", "@testing-library/jest-dom"],
     "paths": {
       // @contracts
       "@contracts": ["contracts"],

@@ -26,7 +26,7 @@ function createWrapper(initialConfig: LayoutConfig) {
 }
 
 describe('useLayoutOptions', () => {
-  it('обновляет title и onBack в контексте', async () => {
+  it('обновляет title, onBack и showReportFab в контексте', async () => {
     const initialConfig: LayoutConfig = { title: 'Исходный' }
     const onBack = vi.fn()
 
@@ -37,6 +37,7 @@ describe('useLayoutOptions', () => {
         useLayoutOptions({
           title: 'Новый заголовок',
           onBack,
+          showReportFab: true,
         }),
       { wrapper: Wrapper }
     )
@@ -45,6 +46,7 @@ describe('useLayoutOptions', () => {
       const config = getConfig()
       expect(config.title).toBe('Новый заголовок')
       expect(config.onBack).toBe(onBack)
+      expect(config.showReportFab).toBe(true)
     })
   })
 
@@ -68,6 +70,29 @@ describe('useLayoutOptions', () => {
       const config = getConfig()
       expect(config.title).toBe('Без кнопки назад')
       expect(config.onBack).toBeUndefined()
+    })
+  })
+
+  it('сбрасывает showReportFab в false, если он не передан в options', async () => {
+    const initialConfig: LayoutConfig = {
+      title: 'Исходный',
+      showReportFab: true,
+    }
+
+    const { Wrapper, getConfig } = createWrapper(initialConfig)
+
+    renderHook(
+      () =>
+        useLayoutOptions({
+          title: 'Страница без FAB',
+        }),
+      { wrapper: Wrapper }
+    )
+
+    await waitFor(() => {
+      const config = getConfig()
+      expect(config.title).toBe('Страница без FAB')
+      expect(config.showReportFab).toBe(false)
     })
   })
 

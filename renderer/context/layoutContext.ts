@@ -3,6 +3,7 @@ import { createContext, type Dispatch, type SetStateAction } from 'react'
 export interface LayoutConfig {
   title: string
   onBack?: () => void
+  showReportFab?: boolean
 }
 
 interface LayoutContextValue {
@@ -12,6 +13,7 @@ interface LayoutContextValue {
 
 export const DEFAULT_LAYOUT_CONFIG: LayoutConfig = {
   title: 'Log Owl',
+  showReportFab: false,
 }
 
 export const LayoutContext = createContext<LayoutContextValue | undefined>(

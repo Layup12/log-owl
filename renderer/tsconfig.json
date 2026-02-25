@@ -10,6 +10,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["**/*", "../contracts/**/*"],
+  "include": ["**/*", "../contracts/**/*", "../tests/**/*"],
   "references": [{ "path": "../tsconfig.node.json" }]
 }

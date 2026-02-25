@@ -63,6 +63,7 @@ export default defineConfig({
     environment: 'node',
     // Для UI-тестов используем jsdom
     environmentMatchGlobs: [['renderer/**', 'jsdom']],
+    exclude: ['dist-electron/**', 'node_modules/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],

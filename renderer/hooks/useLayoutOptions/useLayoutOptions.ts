@@ -16,6 +16,7 @@ export function useLayoutOptions(options: LayoutConfig) {
       ...prev,
       ...(options.title !== undefined && { title: options.title }),
       onBack: 'onBack' in options ? options.onBack : undefined,
+      showReportFab: 'showReportFab' in options ? options.showReportFab : false,
     }))
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only sync options.title/setConfig
   }, [options.title, setConfig])
