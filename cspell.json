@@ -19,6 +19,7 @@
     "dist",
     "dist-electron",
     "release",
+    "coverage",
     "docs/*.md",
     "main/migrations/**",
     "**/*.lock",
@@ -26,6 +27,7 @@
     "*.yml",
     "package-lock.json",
     "electron-builder.json",
-    "README.md"
+    "README.md",
+    "*ignore"
   ]
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  clipIntervalsToRange,
   type Interval,
   mergeIntervals,
   totalMinutesRoundedUp,
@@ -66,6 +67,105 @@ describe('mergeIntervals', () => {
     const copy = intervals.map((i) => ({ ...i }))
     mergeIntervals(intervals)
     expect(intervals).toEqual(copy)
+  })
+})
+
+describe('clipIntervalsToRange', () => {
+  const fromIso = '2025-01-01T10:00:00.000Z'
+  const toIso = '2025-01-01T12:00:00.000Z'
+
+  it('returns empty array for empty input', () => {
+    expect(clipIntervalsToRange([], fromIso, toIso)).toEqual([])
+  })
+
+  it('returns interval unchanged when fully inside range', () => {
+    const intervals: Interval[] = [
+      {
+        start: '2025-01-01T10:30:00.000Z',
+        end: '2025-01-01T11:30:00.000Z',
+      },
+    ]
+    expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([
+      {
+        start: '2025-01-01T10:30:00.000Z',
+        end: '2025-01-01T11:30:00.000Z',
+      },
+    ])
+  })
+
+  it('clips interval when start is before from', () => {
+    const intervals: Interval[] = [
+      {
+        start: '2025-01-01T09:00:00.000Z',
+        end: '2025-01-01T11:00:00.000Z',
+      },
+    ]
+    expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([
+      {
+        start: '2025-01-01T10:00:00.000Z',
+        end: '2025-01-01T11:00:00.000Z',
+      },
+    ])
+  })
+
+  it('clips interval when end is after to', () => {
+    const intervals: Interval[] = [
+      {
+        start: '2025-01-01T11:00:00.000Z',
+        end: '2025-01-01T13:00:00.000Z',
+      },
+    ]
+    expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([
+      {
+        start: '2025-01-01T11:00:00.000Z',
+        end: '2025-01-01T12:00:00.000Z',
+      },
+    ])
+  })
+
+  it('returns no segment when interval is fully before range', () => {
+    const intervals: Interval[] = [
+      {
+        start: '2025-01-01T08:00:00.000Z',
+        end: '2025-01-01T09:00:00.000Z',
+      },
+    ]
+    expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([])
+  })
+
+  it('returns no segment when interval is fully after range', () => {
+    const intervals: Interval[] = [
+      {
+        start: '2025-01-01T13:00:00.000Z',
+        end: '2025-01-01T14:00:00.000Z',
+      },
+    ]
+    expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([])
+  })
+
+  it('clips open interval (end null) with end = toIso', () => {
+    const intervals: Interval[] = [
+      {
+        start: '2025-01-01T11:00:00.000Z',
+        end: null,
+      },
+    ]
+    expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([
+      {
+        start: '2025-01-01T11:00:00.000Z',
+        end: '2025-01-01T12:00:00.000Z',
+      },
+    ])
+  })
+
+  it('omits zero-length segments', () => {
+    const intervals: Interval[] = [
+      {
+        start: '2025-01-01T09:00:00.000Z',
+        end: '2025-01-01T10:00:00.000Z',
+      },
+    ]
+    expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([])
   })
 })
 

@@ -10,3 +10,9 @@ dist-electron
 # Electron builder artifacts
 release/
 
+# Coverage reports
+coverage/
+
+# VS Code settings
+.vscode/
+

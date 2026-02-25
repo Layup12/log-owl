@@ -97,8 +97,9 @@ pnpm run dev
 ### Часто используемые
 
 - **`pnpm run dev`** — полный dev‑режим (Vite + Electron).
-- **`pnpm run check`** — единая проверка качества: lint, format:check, spellcheck, test.
-- **`pnpm run test`** — разовый прогон юнит‑тестов.
+- **`pnpm run check`** — единая проверка качества: lint, format:check, spellcheck, test:coverage.
+- **`pnpm run test`** — разовый прогон юнит‑тестов (без отчёта покрытия).
+- **`pnpm run test:coverage`** — разовый прогон тестов с отчётом покрытия и проверкой порога; именно эта команда используется в `check` и в pre-commit.
 
 ### Dev‑сценарии
 
@@ -121,6 +122,7 @@ pnpm run dev
 - `pnpm run format:check` — проверка форматирования без изменений файлов.
 - `pnpm run spellcheck` — CSpell по проекту.
 - `pnpm run test:watch` — Vitest в watch‑режиме.
+- `pnpm run test:coverage` — тесты с покрытием (Vitest Coverage, провайдер v8) и проверкой порога; отчёт в терминале и HTML в каталоге `coverage/`. Порог пока намеренно низкий; повышение планируется по мере роста покрытия.
 - `pnpm run typecheck` — проверка типов TypeScript без сборки, для main и renderer.
 
 ### Анализ кода и бандла
@@ -149,7 +151,7 @@ pnpm run dev
 - **Prettier** — форматирование.
 - **CSpell** — проверка орфографии (включая `cspell-dict-ru_ru`).
 - **Husky + lint-staged**:
-  - pre-commit хук запускает `lint-staged` и `pnpm run test`;
+  - pre-commit хук запускает `lint-staged` и `pnpm run test:coverage`;
   - на изменённых файлах применяется ESLint + Prettier + CSpell.
 
 Рекомендации:
@@ -162,7 +164,7 @@ pnpm run dev
 
 - В `.husky/pre-commit` настроен pre-commit хук:
   - запускает `pnpm exec lint-staged`, который применяет ESLint, Prettier и CSpell только к изменённым файлам;
-  - затем запускает `pnpm run test` для базовой проверки юнит‑тестов перед коммитом.
+  - затем запускает `pnpm run test:coverage` для проверки юнит‑тестов и порога покрытия перед коммитом.
 - Это позволяет ловить большинство ошибок до пуша и поддерживать единый стиль кода.
 
 ---
@@ -175,13 +177,15 @@ pnpm run dev
 - по умолчанию используется окружение `node`, что хорошо подходит для:
   - чистых функций;
   - бизнес‑логики;
-  - утилит и IPC‑слоя.
+  - утилит и IPC‑слоя (в т.ч. Zod‑схем).
+- **Покрытие кода (Coverage)** включено: провайдер v8, отчёт в терминале и HTML в каталоге `coverage/`. В `check` и в pre-commit используется `pnpm run test:coverage`, поэтому порог покрытия проверяется при каждой проверке качества. Порог пока намеренно низкий; планируется повышать его по мере добавления тестов.
 
 Базовые команды:
 
 ```bash
-pnpm run test       # разовый прогон
-pnpm run test:watch # watch-режим
+pnpm run test          # разовый прогон без покрытия
+pnpm run test:coverage # разовый прогон с покрытием и проверкой порога (используется в check и pre-commit)
+pnpm run test:watch   # watch-режим
 ```
 
 При необходимости UI‑тестов можно:

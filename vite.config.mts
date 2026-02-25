@@ -41,10 +41,7 @@ export default defineConfig({
       // @renderer
       '@renderer': path.resolve(__dirname, './renderer'),
       '@renderer/api': path.resolve(__dirname, './renderer/api'),
-      '@renderer/components': path.resolve(
-        __dirname,
-        './renderer/components'
-      ),
+      '@renderer/components': path.resolve(__dirname, './renderer/components'),
       '@renderer/context': path.resolve(__dirname, './renderer/context'),
       '@renderer/hooks': path.resolve(__dirname, './renderer/hooks'),
       '@renderer/shared/ui': path.resolve(__dirname, './renderer/shared/ui'),
@@ -62,6 +59,17 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      thresholds: {
+        lines: 1,
+        functions: 1,
+        branches: 1,
+        statements: 1,
+      },
+      include: ['contracts/**/*.ts', 'main/**/*.ts', 'renderer/**/*.{ts,tsx}'],
+      exclude: ['**/*.test.*', '**/*.d.ts', '**/index.ts', '**/types.ts'],
+    },
   },
 })
-

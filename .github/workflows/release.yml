@@ -6,7 +6,7 @@ permissions:
 on:
   push:
     tags:
-      - "v*.*.*"
+      - 'v*.*.*'
   workflow_dispatch:
 
 jobs:
@@ -48,4 +48,3 @@ jobs:
             release/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
