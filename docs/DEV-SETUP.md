@@ -69,6 +69,9 @@ pnpm run dev
 - **`contracts/`** — общие типы и контракты между main и renderer (подробности см. в `docs/ARCHITECTURE.md`).
 - **`scripts/`** — вспомогательные скрипты:
   - например, `generate-preload-channels.js` для автогенерации каналов.
+- **`tests/`** — общая инфраструктура тестов:
+  - `tests/vitest.setup.ts` — глобальный setup для Vitest (jest-dom и т.п.);
+  - `tests/e2e/` — e2e‑сценарии Playwright (спеки, артефакты и отчёт при запуске).
 - **`docs/`** — документация:
   - `DEV-SETUP.md` — текущий файл (setup и сценарии разработки);
   - `ARCHITECTURE.md` — архитектура и технические решения;
@@ -97,7 +100,7 @@ pnpm run dev
 ### Часто используемые
 
 - **`pnpm run dev`** — полный dev‑режим (Vite + Electron).
-- **`pnpm run check`** — единая проверка качества: lint, format:check, spellcheck, test:coverage.
+- **`pnpm run check`** — единая проверка качества: lint, format:check, spellcheck, test:coverage, e2e.
 - **`pnpm run test`** — разовый прогон юнит‑тестов (без отчёта покрытия).
 - **`pnpm run test:coverage`** — разовый прогон тестов с отчётом покрытия и проверкой порога; именно эта команда используется в `check` и в pre-commit.
 
@@ -123,6 +126,8 @@ pnpm run dev
 - `pnpm run spellcheck` — CSpell по проекту.
 - `pnpm run test:watch` — Vitest в watch‑режиме.
 - `pnpm run test:coverage` — тесты с покрытием (Vitest Coverage, провайдер v8) и проверкой порога; отчёт в терминале и HTML в каталоге `coverage/`. Порог пока намеренно низкий; повышение планируется по мере роста покрытия.
+- `pnpm run e2e` — прогон e2e‑тестов (Playwright): поднимается Vite‑dev‑сервер, затем выполняются сценарии из `tests/e2e/`. Артефакты и HTML‑отчёт сохраняются в `tests/e2e/.results/` и `tests/e2e/report/`.
+- `pnpm run e2e:ui` — то же, но с интерактивным UI Playwright (удобно для отладки сценариев).
 - `pnpm run typecheck` — проверка типов TypeScript без сборки, для main и renderer.
 
 ### Анализ кода и бандла
@@ -188,10 +193,15 @@ pnpm run test:coverage # разовый прогон с покрытием и п
 pnpm run test:watch   # watch-режим
 ```
 
-При необходимости UI‑тестов можно:
+При необходимости UI‑тестов можно переключать окружение на `jsdom` для отдельных тестов/файлов (для `renderer/**` это уже настроено через `environmentMatchGlobs`).
 
-- переключать окружение на `jsdom` для отдельных тестов/файлов;
-- добавить отдельную конфигурацию Vitest или другую систему (например, Playwright) — это остаётся за рамками базовой настройки.
+**E2E‑тесты (Playwright)** настроены отдельно:
+
+- сценарии лежат в **`tests/e2e/`**;
+- глобальный setup для Vitest — **`tests/vitest.setup.ts`** (подключение jest-dom);
+- конфигурация Playwright — **`playwright.config.ts`** в корне (testDir, webServer на Vite, артефакты и отчёт внутри `tests/e2e/`).
+
+Команды: `pnpm run e2e` (разовый прогон), `pnpm run e2e:ui` (с интерактивным UI). Перед первым запуском при необходимости установите браузеры: `pnpm exec playwright install chromium`.
 
 ---
 

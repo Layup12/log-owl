@@ -14,6 +14,8 @@ export default tseslint.config(
       'dist-electron/**',
       'node_modules/**',
       'main/preload.ts',
+      'tests/e2e/.results/**',
+      'tests/e2e/report/**',
     ],
   },
   js.configs.recommended,
@@ -40,7 +42,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['vite.config.ts'],
+    files: ['vite.config.mts', 'playwright.config.ts'],
     rules: {
       'import/no-default-export': 'off',
     },

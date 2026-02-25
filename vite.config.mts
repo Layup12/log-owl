@@ -63,7 +63,11 @@ export default defineConfig({
     environment: 'node',
     // Для UI-тестов используем jsdom
     environmentMatchGlobs: [['renderer/**', 'jsdom']],
-    exclude: ['dist-electron/**', 'node_modules/**'],
+    include: [
+      'main/**/*.test.ts',
+      'renderer/**/*.test.{ts,tsx}',
+      'contracts/**/*.test.ts',
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
@@ -76,6 +80,6 @@ export default defineConfig({
       include: ['contracts/**/*.ts', 'main/**/*.ts', 'renderer/**/*.{ts,tsx}'],
       exclude: ['**/*.test.*', '**/*.d.ts', '**/index.ts', '**/types.ts'],
     },
-    setupFiles: ['./tests/setup.ts'],
+    setupFiles: ['./tests/vitest.setup.ts'],
   },
 })
