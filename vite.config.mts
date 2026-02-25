@@ -58,7 +58,10 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    // По умолчанию тесты выполняются в Node
     environment: 'node',
+    // Для UI-тестов используем jsdom
+    environmentMatchGlobs: [['renderer/**', 'jsdom']],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
@@ -71,5 +74,6 @@ export default defineConfig({
       include: ['contracts/**/*.ts', 'main/**/*.ts', 'renderer/**/*.{ts,tsx}'],
       exclude: ['**/*.test.*', '**/*.d.ts', '**/index.ts', '**/types.ts'],
     },
+    setupFiles: ['./tests/setup.ts'],
   },
 })
