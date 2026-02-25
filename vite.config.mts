@@ -44,6 +44,7 @@ export default defineConfig({
       '@renderer/components': path.resolve(__dirname, './renderer/components'),
       '@renderer/context': path.resolve(__dirname, './renderer/context'),
       '@renderer/hooks': path.resolve(__dirname, './renderer/hooks'),
+      '@renderer/tests/lib': path.resolve(__dirname, './renderer/tests/lib'),
       '@renderer/shared/ui': path.resolve(__dirname, './renderer/shared/ui'),
       '@renderer/shared/lib': path.resolve(__dirname, './renderer/shared/lib'),
       '@renderer/shared/store': path.resolve(

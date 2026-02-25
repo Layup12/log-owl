@@ -28,6 +28,7 @@
       "@renderer/components": ["renderer/components"],
       "@renderer/context": ["renderer/context"],
       "@renderer/hooks": ["renderer/hooks"],
+      "@renderer/tests/lib": ["renderer/tests/lib"],
       "@renderer/shared/ui": ["renderer/shared/ui"],
       "@renderer/shared/lib": ["renderer/shared/lib"],
       "@renderer/shared/store": ["renderer/shared/store"],

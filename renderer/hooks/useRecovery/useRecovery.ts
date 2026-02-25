@@ -5,9 +5,11 @@ export function useRecovery() {
   const [recoveryModalOpen, setRecoveryModalOpen] = useState(false)
 
   useEffect(() => {
-    getRecoveryInfo().then((info) => {
+    async function fetchRecovery() {
+      const info = await getRecoveryInfo()
       if (info?.recovered) setRecoveryModalOpen(true)
-    })
+    }
+    fetchRecovery()
   }, [])
 
   return {
