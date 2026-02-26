@@ -16,13 +16,21 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
+          - ubuntu-22.04
           - macos-latest
           - windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            libfuse2 libgtk-3-0 libnotify-dev libnss3 libxss1 libasound2 libxtst6
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4

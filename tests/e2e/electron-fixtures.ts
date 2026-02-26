@@ -29,7 +29,11 @@ export const test = base.extend<ElectronFixtures>({
     fs.rmSync(TEST_USER_DATA_PATH, { recursive: true, force: true })
 
     const app = await electron.launch({
-      args: ['.', `--log-owl-user-data=${TEST_USER_DATA_PATH}`],
+      args: [
+        '.',
+        `--log-owl-user-data=${TEST_USER_DATA_PATH}`,
+        ...(process.env.CI ? ['--no-sandbox'] : []),
+      ],
     })
     try {
       await use(app)
