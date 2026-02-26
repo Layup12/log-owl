@@ -32,5 +32,8 @@ jobs:
       - name: Install Playwright browsers (e2e)
         run: pnpm exec playwright install --with-deps chromium
 
+      - name: Install Xvfb (virtual display for Electron e2e)
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
       - name: Run checks (lint, tests, spellcheck, e2e)
-        run: pnpm run check
+        run: xvfb-run pnpm run check
