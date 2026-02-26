@@ -30,7 +30,7 @@
     "*.yml",
     "package-lock.json",
     "electron-builder.json",
-    "README.md",
+    "*.md",
     "*ignore",
     ".npmrc"
   ]
