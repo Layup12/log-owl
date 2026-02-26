@@ -10,10 +10,6 @@ import {
   setMainWindow,
 } from '../windowState'
 
-/**
- * Создаёт главное окно приложения: загружает сохранённое состояние,
- * создаёт BrowserWindow, вешает обработчики, загружает URL или index.html.
- */
 export function createWindow(): void {
   const state = loadWindowState()
   const opts: Electron.BrowserWindowConstructorOptions = {
@@ -43,6 +39,8 @@ export function createWindow(): void {
   if (isDev()) {
     mainWindow.loadURL('http://localhost:5173')
   } else {
-    mainWindow.loadFile(path.join(__dirname, '..', '..', 'dist/index.html'))
+    mainWindow.loadFile(
+      path.join(__dirname, '..', '..', '..', 'dist', 'index.html')
+    )
   }
 }
