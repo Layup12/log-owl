@@ -36,11 +36,11 @@
     "*.{ts,tsx,js,jsx,mjs,cjs}": [
       "eslint --fix",
       "prettier --write",
-      "cspell"
+      "cspell --no-must-find-files"
     ],
     "*.{json,md,html}": [
       "prettier --write",
-      "cspell"
+      "cspell --no-must-find-files"
     ]
   },
   "pnpm": {
