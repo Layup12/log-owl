@@ -9,7 +9,7 @@ export const isoStringSchema = z.string().min(1, 'ISO string is required')
 // Task
 export const taskInsertSchema = z
   .object({
-    title: z.string().min(1, 'title is required'),
+    title: z.string().default(''),
     comment: z.string().nullable().optional(),
     completed_at: z.string().nullable().optional(),
   })
@@ -17,7 +17,7 @@ export const taskInsertSchema = z
 
 export const taskUpdateSchema = z
   .object({
-    title: z.string().min(1).optional(),
+    title: z.string().optional(),
     comment: z.string().nullable().optional(),
     completed_at: z.string().nullable().optional(),
   })

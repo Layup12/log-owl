@@ -31,6 +31,7 @@
     "package-lock.json",
     "electron-builder.json",
     "README.md",
-    "*ignore"
+    "*ignore",
+    ".npmrc"
   ]
 }

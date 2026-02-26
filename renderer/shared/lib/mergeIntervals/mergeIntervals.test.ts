@@ -8,17 +8,17 @@ import {
 } from './mergeIntervals'
 
 describe('mergeIntervals', () => {
-  it('returns empty array for empty input', () => {
+  it('возвращает пустой массив для пустого ввода', () => {
     expect(mergeIntervals([])).toEqual([])
   })
 
-  it('ignores intervals with null end', () => {
+  it('игнорирует интервалы с end = null', () => {
     expect(
       mergeIntervals([{ start: '2025-01-01T10:00:00.000Z', end: null }])
     ).toEqual([])
   })
 
-  it('returns single interval as-is', () => {
+  it('возвращает один интервал без изменений', () => {
     const one: Interval[] = [
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T11:00:00.000Z' },
     ]
@@ -27,7 +27,7 @@ describe('mergeIntervals', () => {
     ])
   })
 
-  it('sorts by start then merges overlapping', () => {
+  it('сортирует по start и затем объединяет пересекающиеся интервалы', () => {
     const intervals: Interval[] = [
       { start: '2025-01-01T12:00:00.000Z', end: '2025-01-01T13:00:00.000Z' },
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T11:00:00.000Z' },
@@ -39,7 +39,7 @@ describe('mergeIntervals', () => {
     ])
   })
 
-  it('merges adjacent intervals (end equals next start)', () => {
+  it('объединяет соседние интервалы (end равен следующему start)', () => {
     const intervals: Interval[] = [
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T11:00:00.000Z' },
       { start: '2025-01-01T11:00:00.000Z', end: '2025-01-01T12:00:00.000Z' },
@@ -49,7 +49,7 @@ describe('mergeIntervals', () => {
     ])
   })
 
-  it('merges fully contained interval', () => {
+  it('объединяет полностью вложенный интервал', () => {
     const intervals: Interval[] = [
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T13:00:00.000Z' },
       { start: '2025-01-01T11:00:00.000Z', end: '2025-01-01T12:00:00.000Z' },
@@ -59,7 +59,7 @@ describe('mergeIntervals', () => {
     ])
   })
 
-  it('does not mutate input', () => {
+  it('не мутирует входной массив', () => {
     const intervals: Interval[] = [
       { start: '2025-01-01T12:00:00.000Z', end: '2025-01-01T13:00:00.000Z' },
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T11:00:00.000Z' },
@@ -74,11 +74,11 @@ describe('clipIntervalsToRange', () => {
   const fromIso = '2025-01-01T10:00:00.000Z'
   const toIso = '2025-01-01T12:00:00.000Z'
 
-  it('returns empty array for empty input', () => {
+  it('возвращает пустой массив для пустого ввода', () => {
     expect(clipIntervalsToRange([], fromIso, toIso)).toEqual([])
   })
 
-  it('returns interval unchanged when fully inside range', () => {
+  it('возвращает интервал без изменений, если он полностью внутри диапазона', () => {
     const intervals: Interval[] = [
       {
         start: '2025-01-01T10:30:00.000Z',
@@ -93,7 +93,7 @@ describe('clipIntervalsToRange', () => {
     ])
   })
 
-  it('clips interval when start is before from', () => {
+  it('обрезает интервал, если start раньше from', () => {
     const intervals: Interval[] = [
       {
         start: '2025-01-01T09:00:00.000Z',
@@ -108,7 +108,7 @@ describe('clipIntervalsToRange', () => {
     ])
   })
 
-  it('clips interval when end is after to', () => {
+  it('обрезает интервал, если end позже to', () => {
     const intervals: Interval[] = [
       {
         start: '2025-01-01T11:00:00.000Z',
@@ -123,7 +123,7 @@ describe('clipIntervalsToRange', () => {
     ])
   })
 
-  it('returns no segment when interval is fully before range', () => {
+  it('не возвращает интервал, если он полностью до диапазона', () => {
     const intervals: Interval[] = [
       {
         start: '2025-01-01T08:00:00.000Z',
@@ -133,7 +133,7 @@ describe('clipIntervalsToRange', () => {
     expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([])
   })
 
-  it('returns no segment when interval is fully after range', () => {
+  it('не возвращает интервал, если он полностью после диапазона', () => {
     const intervals: Interval[] = [
       {
         start: '2025-01-01T13:00:00.000Z',
@@ -143,7 +143,7 @@ describe('clipIntervalsToRange', () => {
     expect(clipIntervalsToRange(intervals, fromIso, toIso)).toEqual([])
   })
 
-  it('clips open interval (end null) with end = toIso', () => {
+  it('обрезает открытый интервал (end = null), устанавливая end = toIso', () => {
     const intervals: Interval[] = [
       {
         start: '2025-01-01T11:00:00.000Z',
@@ -158,7 +158,7 @@ describe('clipIntervalsToRange', () => {
     ])
   })
 
-  it('omits zero-length segments', () => {
+  it('пропускает интервалы нулевой длины', () => {
     const intervals: Interval[] = [
       {
         start: '2025-01-01T09:00:00.000Z',
@@ -170,21 +170,21 @@ describe('clipIntervalsToRange', () => {
 })
 
 describe('totalMinutesRoundedUp', () => {
-  it('returns 0 for no closed intervals', () => {
+  it('возвращает 0, если нет закрытых интервалов', () => {
     expect(totalMinutesRoundedUp([])).toBe(0)
     expect(
       totalMinutesRoundedUp([{ start: '2025-01-01T10:00:00.000Z', end: null }])
     ).toBe(0)
   })
 
-  it('returns rounded up minutes for one interval', () => {
+  it('возвращает округлённые вверх минуты для одного интервала', () => {
     const intervals: Interval[] = [
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T10:00:30.000Z' }, // 0.5 min
     ]
     expect(totalMinutesRoundedUp(intervals)).toBe(1)
   })
 
-  it('returns sum of merged intervals (overlap counted once)', () => {
+  it('возвращает сумму минут объединённых интервалов (пересечения считаются один раз)', () => {
     const intervals: Interval[] = [
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T11:00:00.000Z' }, // 60 min
       { start: '2025-01-01T10:30:00.000Z', end: '2025-01-01T11:00:00.000Z' }, // 30 min overlap
@@ -192,7 +192,7 @@ describe('totalMinutesRoundedUp', () => {
     expect(totalMinutesRoundedUp(intervals)).toBe(60)
   })
 
-  it('rounds up partial minutes', () => {
+  it('округляет неполные минуты вверх', () => {
     const intervals: Interval[] = [
       { start: '2025-01-01T10:00:00.000Z', end: '2025-01-01T10:01:01.000Z' }, // 1 min 1 sec
     ]

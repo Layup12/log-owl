@@ -126,8 +126,7 @@ pnpm run dev
 - `pnpm run spellcheck` — CSpell по проекту.
 - `pnpm run test:watch` — Vitest в watch‑режиме.
 - `pnpm run test:coverage` — тесты с покрытием (Vitest Coverage, провайдер v8) и проверкой порога; отчёт в терминале и HTML в каталоге `coverage/`. Порог пока намеренно низкий; повышение планируется по мере роста покрытия.
-- `pnpm run e2e` — прогон e2e‑тестов (Playwright): поднимается Vite‑dev‑сервер, затем выполняются сценарии из `tests/e2e/`. Артефакты и HTML‑отчёт сохраняются в `tests/e2e/.results/` и `tests/e2e/report/`.
-- `pnpm run e2e:ui` — то же, но с интерактивным UI Playwright (удобно для отладки сценариев).
+- `pnpm run e2e` — прогон e2e‑тестов (Playwright): поднимается Vite‑dev‑сервер, затем выполняются сценарии из `tests/e2e/`. Артефакты и HTML‑отчёт сохраняются в `tests/e2e/.generated/` (подкаталоги `results/` и `report/`).
 - `pnpm run typecheck` — проверка типов TypeScript без сборки, для main и renderer.
 
 ### Анализ кода и бандла
@@ -199,9 +198,9 @@ pnpm run test:watch   # watch-режим
 
 - сценарии лежат в **`tests/e2e/`**;
 - глобальный setup для Vitest — **`tests/vitest.setup.ts`** (подключение jest-dom);
-- конфигурация Playwright — **`playwright.config.ts`** в корне (testDir, webServer на Vite, артефакты и отчёт внутри `tests/e2e/`).
+- конфигурация Playwright — **`playwright.config.ts`** в корне (testDir, webServer на Vite, артефакты и отчёт внутри `tests/e2e/.generated/`).
 
-Команды: `pnpm run e2e` (разовый прогон), `pnpm run e2e:ui` (с интерактивным UI). Перед первым запуском при необходимости установите браузеры: `pnpm exec playwright install chromium`.
+Команды: `pnpm run e2e` (разовый прогон). Перед первым запуском при необходимости установите браузеры: `pnpm exec playwright install chromium`.
 
 ---
 

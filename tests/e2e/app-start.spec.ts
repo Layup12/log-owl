@@ -1,8 +1,8 @@
-import { expect, test } from '@playwright/test'
+import { test } from './electron-fixtures'
+import { expectTaskListVisible } from './lib'
 
 test.describe('старт приложения', () => {
-  test('главная страница загружается', async ({ page }) => {
-    await page.goto('/')
-    await expect(page.locator('#root')).toBeVisible({ timeout: 10_000 })
+  test('при старте показывается список задач', async ({ window }) => {
+    await expectTaskListVisible(window)
   })
 })

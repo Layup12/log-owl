@@ -9,7 +9,7 @@ import {
 import { parseBounds } from './parseBounds'
 
 describe('parseBounds', () => {
-  it('returns defaults for null', () => {
+  it('возвращает значения по умолчанию для null', () => {
     const result = parseBounds(null)
     expect(result).toEqual({
       width: DEFAULT_WIDTH,
@@ -19,7 +19,7 @@ describe('parseBounds', () => {
     })
   })
 
-  it('returns defaults for empty string', () => {
+  it('возвращает значения по умолчанию для пустой строки', () => {
     const result = parseBounds('')
     expect(result).toEqual({
       width: DEFAULT_WIDTH,
@@ -29,7 +29,7 @@ describe('parseBounds', () => {
     })
   })
 
-  it('parses valid JSON with width and height', () => {
+  it('парсит корректный JSON с width и height', () => {
     const result = parseBounds(JSON.stringify({ width: 1000, height: 600 }))
     expect(result).toEqual({
       width: 1000,
@@ -39,7 +39,7 @@ describe('parseBounds', () => {
     })
   })
 
-  it('parses valid JSON with width, height, x, y', () => {
+  it('парсит корректный JSON с width, height, x и y', () => {
     const result = parseBounds(
       JSON.stringify({ width: 1000, height: 600, x: 50, y: 100 })
     )
@@ -51,7 +51,7 @@ describe('parseBounds', () => {
     })
   })
 
-  it('clamps width and height to MIN when below', () => {
+  it('ограничивает width и height минимальными значениями, если они меньше минимума', () => {
     const result = parseBounds(JSON.stringify({ width: 100, height: 200 }))
     expect(result).toEqual({
       width: MIN_WIDTH,
@@ -61,7 +61,7 @@ describe('parseBounds', () => {
     })
   })
 
-  it('returns defaults for invalid JSON', () => {
+  it('возвращает значения по умолчанию для некорректного JSON', () => {
     const result = parseBounds('not json')
     expect(result).toEqual({
       width: DEFAULT_WIDTH,
@@ -71,7 +71,7 @@ describe('parseBounds', () => {
     })
   })
 
-  it('returns defaults when width/height are not numbers', () => {
+  it('возвращает значения по умолчанию, если width/height не числа', () => {
     const result = parseBounds(JSON.stringify({ width: '1000', height: 600 }))
     expect(result).toEqual({
       width: DEFAULT_WIDTH,
@@ -81,7 +81,7 @@ describe('parseBounds', () => {
     })
   })
 
-  it('omits x and y when they are not both finite numbers', () => {
+  it('игнорирует x и y, если они заданы не обоими конечными числами', () => {
     const result = parseBounds(
       JSON.stringify({ width: 1000, height: 600, x: 50 })
     )

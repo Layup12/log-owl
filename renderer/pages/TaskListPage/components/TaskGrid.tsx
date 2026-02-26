@@ -49,6 +49,7 @@ export function TaskGrid({
         />
       ))}
       <Card
+        data-testid="add-task-card"
         variant="outlined"
         sx={{
           height: '100%',

@@ -53,6 +53,7 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
   return (
     <>
       <Card
+        data-testid="task-card"
         variant="outlined"
         sx={{
           height: '100%',

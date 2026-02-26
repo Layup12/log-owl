@@ -8,7 +8,7 @@ import {
 } from './schemas'
 
 describe('taskInsertSchema', () => {
-  it('accepts valid object with title', () => {
+  it('принимает валидный объект с title', () => {
     const result = taskInsertSchema.safeParse({
       title: 'My task',
     })
@@ -20,7 +20,7 @@ describe('taskInsertSchema', () => {
     }
   })
 
-  it('accepts object with comment and completed_at', () => {
+  it('принимает объект с comment и completed_at', () => {
     const result = taskInsertSchema.safeParse({
       title: 'Done task',
       comment: 'Note',
@@ -29,17 +29,20 @@ describe('taskInsertSchema', () => {
     expect(result.success).toBe(true)
   })
 
-  it('rejects empty title', () => {
+  it('принимает пустой title', () => {
     const result = taskInsertSchema.safeParse({ title: '' })
-    expect(result.success).toBe(false)
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.title).toBe('')
+    }
   })
 
-  it('rejects when title is not a string', () => {
+  it('отклоняет объект, если title не строка', () => {
     const result = taskInsertSchema.safeParse({ title: 123 })
     expect(result.success).toBe(false)
   })
 
-  it('rejects extra keys (strict)', () => {
+  it('отклоняет объект с лишними ключами (strict)', () => {
     const result = taskInsertSchema.safeParse({
       title: 'Ok',
       extra: 'not allowed',
@@ -49,7 +52,7 @@ describe('taskInsertSchema', () => {
 })
 
 describe('timeEntryInsertSchema', () => {
-  it('accepts valid object with task_id and started_at', () => {
+  it('принимает валидный объект с task_id и started_at', () => {
     const result = timeEntryInsertSchema.safeParse({
       task_id: 1,
       started_at: '2025-01-01T10:00:00.000Z',
@@ -57,21 +60,21 @@ describe('timeEntryInsertSchema', () => {
     expect(result.success).toBe(true)
   })
 
-  it('rejects missing task_id', () => {
+  it('отклоняет объект без task_id', () => {
     const result = timeEntryInsertSchema.safeParse({
       started_at: '2025-01-01T10:00:00.000Z',
     })
     expect(result.success).toBe(false)
   })
 
-  it('rejects missing started_at', () => {
+  it('отклоняет объект без started_at', () => {
     const result = timeEntryInsertSchema.safeParse({
       task_id: 1,
     })
     expect(result.success).toBe(false)
   })
 
-  it('rejects invalid task_id type', () => {
+  it('отклоняет объект с некорректным типом task_id', () => {
     const result = timeEntryInsertSchema.safeParse({
       task_id: '1',
       started_at: '2025-01-01T10:00:00.000Z',
@@ -81,7 +84,7 @@ describe('timeEntryInsertSchema', () => {
 })
 
 describe('taskSessionInsertSchema', () => {
-  it('accepts valid object with task_id and opened_at', () => {
+  it('принимает валидный объект с task_id и opened_at', () => {
     const result = taskSessionInsertSchema.safeParse({
       task_id: 1,
       opened_at: '2025-01-01T10:00:00.000Z',
@@ -89,7 +92,7 @@ describe('taskSessionInsertSchema', () => {
     expect(result.success).toBe(true)
   })
 
-  it('rejects empty opened_at', () => {
+  it('отклоняет объект с пустым opened_at', () => {
     const result = taskSessionInsertSchema.safeParse({
       task_id: 1,
       opened_at: '',
@@ -99,15 +102,18 @@ describe('taskSessionInsertSchema', () => {
 })
 
 describe('taskUpdateSchema', () => {
-  it('accepts partial update with optional title', () => {
+  it('принимает частичное обновление с необязательным title', () => {
     const result = taskUpdateSchema.safeParse({
       title: 'Updated',
     })
     expect(result.success).toBe(true)
   })
 
-  it('rejects empty title when provided', () => {
+  it('принимает пустой title, если он передан', () => {
     const result = taskUpdateSchema.safeParse({ title: '' })
-    expect(result.success).toBe(false)
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.title).toBe('')
+    }
   })
 })
