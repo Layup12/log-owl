@@ -2,6 +2,7 @@
   "version": "0.2",
   "language": "en,ru",
   "import": ["cspell-dict-ru_ru/cspell-ext.json"],
+  "files": ["renderer/**", "main/**", "contracts/**", "tests/**"],
   "words": [
     "хендлер",
     "хендлера",
@@ -11,27 +12,9 @@
     "рендереру",
     "Валидирует",
     "хелперы",
-    "плейсхолдер",
-    "treemap",
     "модалка",
     "модалку",
     "рендере"
   ],
-  "ignorePaths": [
-    "node_modules",
-    "dist",
-    "dist-electron",
-    "release",
-    "coverage",
-    "docs/*.md",
-    "main/migrations/**",
-    "**/*.lock",
-    "*.yaml",
-    "*.yml",
-    "package-lock.json",
-    "electron-builder.json",
-    "*.md",
-    "*ignore",
-    ".npmrc"
-  ]
+  "ignorePaths": ["main/migrations/**"]
 }

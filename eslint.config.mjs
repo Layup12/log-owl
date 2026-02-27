@@ -56,10 +56,6 @@ export default tseslint.config(
     },
   },
   {
-    files: ['scripts/**/*.js'],
-    rules: { '@typescript-eslint/no-require-imports': 'off' },
-  },
-  {
     files: ['renderer/**/*.tsx', 'renderer/**/*.ts'],
     plugins: {
       react,
@@ -78,7 +74,16 @@ export default tseslint.config(
     settings: { react: { version: 'detect' } },
   },
   {
-    files: ['main/**/*.ts', 'contracts/**/*.ts', 'scripts/**/*.js'],
+    files: ['scripts/**/*.js'],
+    rules: { '@typescript-eslint/no-require-imports': 'off' },
+  },
+  {
+    files: [
+      'main/**/*.ts',
+      'contracts/**/*.ts',
+      'scripts/**/*.js',
+      'commitlint.config.cjs',
+    ],
     languageOptions: {
       globals: { ...globals.node },
     },

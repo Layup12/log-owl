@@ -1,1 +1,1 @@
-pnpm exec lint-staged && pnpm run test:coverage
+node scripts/check-branch-name.js && pnpm exec lint-staged && pnpm run spellcheck && pnpm run test:coverage
