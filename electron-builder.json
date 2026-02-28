@@ -7,7 +7,7 @@
   "mac": {
     "category": "public.app-category.productivity",
     "target": ["dmg", "zip"],
-    "arch": ["x64", "arm64"]
+    "defaultArch": "universal"
   },
   "win": { "target": ["nsis"] },
   "linux": { "target": ["AppImage"] },
