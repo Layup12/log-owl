@@ -1,0 +1,83 @@
+# Reusable workflow: сборка desktop-приложения для текущей ОС (matrix).
+# Вызывается из build-dev и release; единое место для шагов сборки.
+name: Build desktop (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Git ref для checkout (ветка, тег, SHA)'
+        required: true
+        type: string
+      upload_to_release:
+        description: 'Загрузить артефакты в GitHub Release'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-22.04
+          - macos-latest
+          - windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            libfuse2 libgtk-3-0 libnotify-dev libnss3 libxss1 libasound2 libxtst6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build desktop application
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            pnpm run build:desktop:mac
+          else
+            pnpm run build:desktop
+          fi
+
+      - name: Upload build artifacts
+        if: ${{ !inputs.upload_to_release }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.os }}
+          path: release/
+          if-no-files-found: warn
+
+      - name: Upload artifacts to GitHub Release
+        if: ${{ inputs.upload_to_release }}
+        uses: softprops/action-gh-release@v2.4.2
+        with:
+          files: |
+            release/*.AppImage
+            release/*.dmg
+            release/*.zip
+            release/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
