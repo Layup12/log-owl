@@ -36,7 +36,7 @@ export default defineConfig({
       '@main/ipc': path.resolve(__dirname, './main/ipc'),
       '@main/lib': path.resolve(__dirname, './main/lib'),
       '@main/migrations': path.resolve(__dirname, './main/migrations'),
-      '@main/repositories/*': path.resolve(__dirname, './main/repositories/*'),
+      '@main/repositories': path.resolve(__dirname, './main/repositories'),
       '@main/windowState': path.resolve(__dirname, './main/windowState'),
       // @renderer
       '@renderer': path.resolve(__dirname, './renderer'),
