@@ -82,8 +82,8 @@ pnpm run dev
 
 Чтобы избежать относительных импортов вида `../../../`, используются алиасы (см. `tsconfig.base.json` и `vite.config.ts`):
 
-- `@main`, `@main/app`, `@main/db`, `@main/ipc`, … — код main‑процесса.
-- `@renderer`, `@renderer/components`, `@renderer/hooks`, `@renderer/shared/*`, … — код renderer.
+- `@main/…` — код main‑процесса;
+- `@renderer/…` — код renderer;
 - `@contracts` — общие контракты/типы.
 
 Это позволяет:
