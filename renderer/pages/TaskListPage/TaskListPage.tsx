@@ -1,7 +1,7 @@
 import { useLayoutOptions } from '@renderer/hooks'
 import { Alert, Box, CircularProgress, Divider } from '@renderer/shared/ui'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { CompletedTasksSection, TaskGrid } from './components'
 import { useTaskListPage } from './useTaskListPage'

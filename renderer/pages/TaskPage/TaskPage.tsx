@@ -18,7 +18,7 @@ import {
   useMediaQuery,
 } from '@renderer/shared/ui'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 
 import { AddIntervalForm, IntervalsList, SessionsSection } from './components'
 import { useTaskPage } from './useTaskPage'

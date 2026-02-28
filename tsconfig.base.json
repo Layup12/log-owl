@@ -29,6 +29,7 @@
       "@renderer/components": ["renderer/components"],
       "@renderer/context": ["renderer/context"],
       "@renderer/hooks": ["renderer/hooks"],
+      "@renderer/pages": ["renderer/pages"],
       "@renderer/tests/lib": ["renderer/tests/lib"],
       "@renderer/shared/ui": ["renderer/shared/ui"],
       "@renderer/shared/lib": ["renderer/shared/lib"],

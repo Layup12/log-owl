@@ -19,7 +19,7 @@ import {
 import { useTimerStore } from '@renderer/shared/store'
 import type { Task, TaskSession, TimeEntry } from '@renderer/shared/types'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 const COMMENT_DEBOUNCE_MS = 800
 
