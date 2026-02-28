@@ -23,7 +23,7 @@
     "test:coverage": "vitest run --coverage",
     "pree2e": "pnpm run build:electron",
     "e2e": "playwright test",
-    "check": "pnpm run lint && pnpm run format:check && pnpm run spellcheck && pnpm run test:coverage && pnpm run e2e",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm run format:check && pnpm run spellcheck && pnpm run test:coverage && pnpm run e2e",
     "analyze:bundle": "ANALYZE=true vite build",
     "analyze:exports:main": "ts-unused-exports main/tsconfig.json",
     "analyze:exports:renderer": "ts-unused-exports renderer/tsconfig.json",

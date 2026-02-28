@@ -19,6 +19,7 @@ export function getDb(userDataPath: string): Database.Database {
   const dbPath = path.join(dir, DB_FILENAME)
   db = new Database(dbPath)
   db.pragma('journal_mode = WAL')
+  db.pragma('foreign_keys = ON')
   return db
 }
 
