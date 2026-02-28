@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "build": "pnpm run build:desktop",
     "build:desktop": "pnpm run build:electron && vite build && electron-builder",
+    "build:desktop:mac": "pnpm run build:electron && vite build && electron-builder --x64 --arm64",
     "build:electron": "pnpm run generate-preload-channels && tsc -p main && tsc-alias -p main/tsconfig.json",
     "typecheck": "tsc -p main && tsc -p renderer/tsconfig.json --noEmit",
     "lint": "eslint .",
