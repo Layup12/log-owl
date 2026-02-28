@@ -55,6 +55,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build desktop application
+        shell: bash
         run: |
           if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
             pnpm run build:desktop:mac
