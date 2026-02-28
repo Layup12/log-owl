@@ -6,7 +6,8 @@
   "files": ["dist/**/*", "dist-electron/**/*", "package.json"],
   "mac": {
     "category": "public.app-category.productivity",
-    "target": ["dmg", "zip"]
+    "target": ["dmg", "zip"],
+    "arch": ["x64", "arm64"]
   },
   "win": { "target": ["nsis"] },
   "linux": { "target": ["AppImage"] },

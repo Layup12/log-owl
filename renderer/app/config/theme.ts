@@ -40,10 +40,7 @@ export const getTheme = (mode: PaletteMode) =>
               borderRadius: 4,
             },
             '*::-webkit-scrollbar-thumb:hover': {
-              background:
-                theme.palette.mode === 'dark'
-                  ? theme.palette.grey[500]
-                  : theme.palette.grey[500],
+              background: theme.palette.grey[500],
             },
           }
         },
