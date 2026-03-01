@@ -12,7 +12,7 @@ import {
 import type { Task, TimeEntry } from '@renderer/shared/types'
 import { useCallback, useEffect, useState } from 'react'
 
-import type { UseTaskPageFormResult } from './useTaskPageForm/useTaskPageForm'
+import type { UseTaskPageFormResult } from '../useTaskPageForm'
 
 function getTodayDateTimeLocal(): string {
   const d = new Date()
