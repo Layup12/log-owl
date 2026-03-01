@@ -1,3 +1,5 @@
+import { deleteTask } from '@renderer/api'
+import { useTimerStore } from '@renderer/shared/store'
 import {
   Button,
   Dialog,
@@ -8,10 +10,11 @@ import {
 } from '@renderer/shared/ui'
 import { useState } from 'react'
 
-interface DeleteTaskConfirmDialogProps {
+export interface DeleteTaskConfirmDialogProps {
   open: boolean
   onClose: () => void
-  onConfirm: () => Promise<void>
+  taskId: number | null
+  onDeleted?: () => void
 }
 
 const MESSAGE =
@@ -20,15 +23,22 @@ const MESSAGE =
 export function DeleteTaskConfirmDialog({
   open,
   onClose,
-  onConfirm,
+  taskId,
+  onDeleted,
 }: DeleteTaskConfirmDialogProps) {
   const [loading, setLoading] = useState(false)
+  const { activeTaskId, activeEntryId, clearActive } = useTimerStore()
 
   const handleConfirm = async () => {
+    if (taskId === null) return
     setLoading(true)
     try {
-      await onConfirm()
+      if (activeTaskId === taskId && activeEntryId !== null) {
+        clearActive()
+      }
+      await deleteTask(taskId)
       onClose()
+      onDeleted?.()
     } finally {
       setLoading(false)
     }

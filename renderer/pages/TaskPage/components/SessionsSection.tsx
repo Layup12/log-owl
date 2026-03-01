@@ -1,3 +1,4 @@
+import type { TaskSession } from '@renderer/shared/types'
 import {
   Box,
   Button,
@@ -9,13 +10,15 @@ import {
 } from '@renderer/shared/ui'
 import dayjs from 'dayjs'
 
-import type { TaskPageHandlers, TaskPageState } from '../useTaskPage'
-
-interface SessionsSectionProps {
-  state: TaskPageState & TaskPageHandlers
+export interface SessionsSectionProps {
+  sessions: TaskSession[]
+  onConvertSessionToInterval: (session: TaskSession) => Promise<void>
 }
 
-export function SessionsSection({ state }: SessionsSectionProps) {
+export function SessionsSection({
+  sessions,
+  onConvertSessionToInterval,
+}: SessionsSectionProps) {
   return (
     <Box
       sx={{
@@ -41,18 +44,18 @@ export function SessionsSection({ state }: SessionsSectionProps) {
           component="div"
           sx={{ bgcolor: 'action.hover', borderRadius: 1 }}
         >
-          {state.sessions.length === 0 ? (
+          {sessions.length === 0 ? (
             <ListItem>
               <ListItemText primary="Нет сессий" />
             </ListItem>
           ) : (
-            [...state.sessions].reverse().map((s) => (
+            [...sessions].reverse().map((s) => (
               <ListItem key={s.id}>
                 <ListItemText
                   primary={`${dayjs(s.opened_at).format('DD.MM.YYYY HH:mm:ss')} — ${
                     s.closed_at
                       ? dayjs(s.closed_at).format('DD.MM.YYYY HH:mm:ss')
-                      : 'не закрыта'
+                      : '…'
                   }`}
                 />
                 {s.closed_at && (
@@ -62,7 +65,7 @@ export function SessionsSection({ state }: SessionsSectionProps) {
                       variant="outlined"
                       onClick={async () => {
                         if (!s.closed_at) return
-                        await state.handleConvertSessionToInterval(s)
+                        await onConvertSessionToInterval(s)
                       }}
                     >
                       В рабочий интервал
