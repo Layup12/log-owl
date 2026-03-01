@@ -1,21 +1,31 @@
 import { useLayoutOptions } from '@renderer/hooks'
 import { Alert, Box, CircularProgress, Divider } from '@renderer/shared/ui'
-import { useState } from 'react'
-import { useNavigate } from 'react-router'
 
 import { CompletedTasksSection, TaskGrid } from './components'
-import { useTaskListPage } from './useTaskListPage'
+import { useTaskListActions, useTaskListData } from './hooks'
+
+const CELL_SIZE = 140
 
 export function TaskListPage() {
-  const navigate = useNavigate()
-  const { tasks, loading, error, setError, reload } = useTaskListPage()
-  const [completedOpen, setCompletedOpen] = useState(false)
   useLayoutOptions({ title: 'Задачи', showReportFab: true })
 
-  const activeTasks = tasks.filter((t) => !t.completed_at)
-  const completedTasks = tasks.filter((t) => t.completed_at)
-  const cellSize = 140
-  const hasCompleted = completedTasks.length > 0
+  const {
+    loading,
+    error,
+    setError,
+    reload,
+    activeTasks,
+    completedTasks,
+    hasCompleted,
+  } = useTaskListData()
+
+  const {
+    creating,
+    handleCreateTask,
+    openTask,
+    completedOpen,
+    toggleCompletedOpen,
+  } = useTaskListActions({ onError: setError })
 
   if (loading) {
     return (
@@ -46,10 +56,11 @@ export function TaskListPage() {
       <Box sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
         <TaskGrid
           tasks={activeTasks}
-          cellSize={cellSize}
-          onTaskOpen={(id) => navigate(`/task/${id}`)}
+          cellSize={CELL_SIZE}
+          onTaskOpen={openTask}
           onTasksUpdate={reload}
-          onCreateTask={() => navigate('/task/new')}
+          onCreateTask={handleCreateTask}
+          onCreateTaskLoading={creating}
         />
       </Box>
       {hasCompleted && (
@@ -57,10 +68,10 @@ export function TaskListPage() {
           <Divider />
           <CompletedTasksSection
             tasks={completedTasks}
-            cellSize={cellSize}
+            cellSize={CELL_SIZE}
             open={completedOpen}
-            onToggle={() => setCompletedOpen((o) => !o)}
-            onTaskOpen={(id) => navigate(`/task/${id}`)}
+            onToggle={toggleCompletedOpen}
+            onTaskOpen={openTask}
             onTasksUpdate={reload}
           />
         </>
