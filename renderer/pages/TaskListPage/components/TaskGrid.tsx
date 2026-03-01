@@ -1,6 +1,12 @@
 import { TaskCard } from '@renderer/components'
 import type { Task } from '@renderer/shared/types'
-import { Box, Card, CardContent, SvgIcon } from '@renderer/shared/ui'
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  SvgIcon,
+} from '@renderer/shared/ui'
 import React from 'react'
 
 interface TaskGridProps {
@@ -9,6 +15,7 @@ interface TaskGridProps {
   onTaskOpen: (id: number) => void
   onTasksUpdate: () => void
   onCreateTask: () => void
+  onCreateTaskLoading?: boolean
 }
 
 function ThinPlusIcon(props: React.ComponentProps<typeof SvgIcon>) {
@@ -30,6 +37,7 @@ export function TaskGrid({
   onTaskOpen,
   onTasksUpdate,
   onCreateTask,
+  onCreateTaskLoading = false,
 }: TaskGridProps) {
   return (
     <Box
@@ -54,11 +62,13 @@ export function TaskGrid({
         sx={{
           height: '100%',
           minHeight: 0,
-          cursor: 'pointer',
+          cursor: onCreateTaskLoading ? 'default' : 'pointer',
           borderStyle: 'dashed',
-          '&:hover': { bgcolor: 'action.hover' },
+          '&:hover': onCreateTaskLoading
+            ? undefined
+            : { bgcolor: 'action.hover' },
         }}
-        onClick={onCreateTask}
+        onClick={onCreateTaskLoading ? undefined : onCreateTask}
       >
         <CardContent
           sx={{
@@ -71,9 +81,13 @@ export function TaskGrid({
             '&:last-child': { pb: 1 },
           }}
         >
-          <ThinPlusIcon
-            sx={{ fontSize: 70, color: 'action.active', opacity: 0.7 }}
-          />
+          {onCreateTaskLoading ? (
+            <CircularProgress size={40} />
+          ) : (
+            <ThinPlusIcon
+              sx={{ fontSize: 70, color: 'action.active', opacity: 0.7 }}
+            />
+          )}
         </CardContent>
       </Card>
     </Box>
