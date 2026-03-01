@@ -215,8 +215,9 @@ describe('useTaskPageIntervals', () => {
     })
     expect(result.current.manualError).not.toBeNull()
 
-    act(() => {
+    await act(async () => {
       result.current.clearManualError()
+      await Promise.resolve()
     })
     expect(result.current.manualError).toBeNull()
   })
@@ -233,8 +234,9 @@ describe('useTaskPageIntervals', () => {
     )
     await waitFor(() => expect(getTimeEntriesMock).toHaveBeenCalled())
 
-    act(() => {
+    await act(async () => {
       result.current.startEditEntry(entry)
+      await Promise.resolve()
     })
 
     expect(result.current.editingEntryId).toBe(10)
@@ -254,12 +256,14 @@ describe('useTaskPageIntervals', () => {
       useTaskPageIntervals(5, createOptions({ form, task: createTask() }))
     )
     await waitFor(() => expect(getTimeEntriesMock).toHaveBeenCalled())
-    act(() => {
+    await act(async () => {
       result.current.startEditEntry(createTimeEntryFixture({ id: 1 }))
+      await Promise.resolve()
     })
 
-    act(() => {
+    await act(async () => {
       result.current.cancelEditEntry()
+      await Promise.resolve()
     })
 
     expect(result.current.editingEntryId).toBeNull()
@@ -290,8 +294,9 @@ describe('useTaskPageIntervals', () => {
     const { result } = renderHook(() =>
       useTaskPageIntervals(5, createOptions({ form, task: createTask() }))
     )
-    act(() => {
+    await act(async () => {
       result.current.startEditEntry(createTimeEntryFixture({ id: 7 }))
+      await Promise.resolve()
     })
     updateTimeEntryMock.mockClear()
 
@@ -314,12 +319,14 @@ describe('useTaskPageIntervals', () => {
     await waitFor(() => expect(getTimeEntriesMock).toHaveBeenCalled())
 
     expect(result.current.deleteConfirmEntry).toBeNull()
-    act(() => {
+    await act(async () => {
       result.current.openDeleteEntryDialog(entry)
+      await Promise.resolve()
     })
     expect(result.current.deleteConfirmEntry).toEqual(entry)
-    act(() => {
+    await act(async () => {
       result.current.closeDeleteEntryDialog()
+      await Promise.resolve()
     })
     expect(result.current.deleteConfirmEntry).toBeNull()
   })
@@ -343,8 +350,9 @@ describe('useTaskPageIntervals', () => {
       useTaskPageIntervals(5, createOptions({ task: createTask() }))
     )
     await waitFor(() => expect(getTimeEntriesMock).toHaveBeenCalled())
-    act(() => {
+    await act(async () => {
       result.current.openDeleteEntryDialog(entry)
+      await Promise.resolve()
     })
     deleteTimeEntryMock.mockClear()
     getTimeEntriesMock.mockClear()
