@@ -3,8 +3,8 @@ import {
   Close as CloseIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material'
-import { deleteTask, updateTask } from '@renderer/api'
-import { useTimerStore } from '@renderer/shared/store'
+import { updateTask } from '@renderer/api'
+import { useDeleteTaskDialog } from '@renderer/hooks'
 import type { Task } from '@renderer/shared/types'
 import {
   Box,
@@ -14,7 +14,7 @@ import {
   Tooltip,
   Typography,
 } from '@renderer/shared/ui'
-import React, { useState } from 'react'
+import React from 'react'
 
 import { DeleteTaskConfirmDialog } from './DeleteTaskConfirmDialog'
 
@@ -26,10 +26,7 @@ interface TaskCardProps {
 
 export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
   const isCompleted = !!task.completed_at
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const clearActive = useTimerStore((s) => s.clearActive)
-  const activeTaskId = useTimerStore((s) => s.activeTaskId)
-  const activeEntryId = useTimerStore((s) => s.activeEntryId)
+  const deleteTaskDialog = useDeleteTaskDialog()
 
   const handleToggleCompleted = async (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -41,13 +38,7 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    setDeleteDialogOpen(true)
-  }
-
-  const handleConfirmDelete = async () => {
-    if (activeTaskId === task.id && activeEntryId !== null) clearActive()
-    await deleteTask(task.id)
-    onUpdate()
+    deleteTaskDialog.open(task.id)
   }
 
   return (
@@ -134,9 +125,10 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
         </CardContent>
       </Card>
       <DeleteTaskConfirmDialog
-        open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-        onConfirm={handleConfirmDelete}
+        open={deleteTaskDialog.isOpen}
+        onClose={deleteTaskDialog.close}
+        taskId={deleteTaskDialog.taskId}
+        onDeleted={onUpdate}
       />
     </>
   )

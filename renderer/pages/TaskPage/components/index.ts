@@ -1,2 +1,5 @@
-export * from './IntervalsSection'
+export * from './AddIntervalForm'
+export * from './IntervalsList'
 export * from './SessionsSection'
+export * from './TaskPageIntervalsAndSessions'
+export * from './TaskPageMainBlock'
