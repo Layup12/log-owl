@@ -2,6 +2,7 @@ import type Database from 'better-sqlite3'
 
 import { up as up1, version as v1 } from './001_init_schema'
 import { up as up2, version as v2 } from './002_time_entries_source'
+import { up as up3, version as v3 } from './003_service_task'
 
 interface Migration {
   version: number
@@ -11,6 +12,7 @@ interface Migration {
 const migrations: Migration[] = [
   { version: v1, up: up1 },
   { version: v2, up: up2 },
+  { version: v3, up: up3 },
 ]
 
 function ensureDbMeta(db: Database.Database): void {

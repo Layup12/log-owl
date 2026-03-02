@@ -25,6 +25,7 @@ export interface TaskPageMainBlockProps {
     | 'saveTitle'
     | 'saveComment'
     | 'flushPendingSaves'
+    | 'task'
   >
   addInterval: TaskPageMainBlockAddIntervalProps
   taskId: number
@@ -90,13 +91,18 @@ export function TaskPageMainBlock({
         </Tooltip>
       </Box>
 
-      <TextField
-        label="Название"
-        value={title}
-        onChange={(e) => setFormField('title', e.target.value)}
-        onBlur={saveTitle}
-        fullWidth
-      />
+      <Box
+        sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}
+      >
+        <TextField
+          label="Название"
+          value={title}
+          onChange={(e) => setFormField('title', e.target.value)}
+          onBlur={saveTitle}
+          fullWidth
+          sx={{ flex: '1 1 200px' }}
+        />
+      </Box>
 
       <TextField
         label="Комментарий"

@@ -3,6 +3,7 @@ import {
   TASK_DELETE,
   TASK_GET_ALL,
   TASK_GET_BY_ID,
+  TASK_GET_SERVICE,
   TASK_UPDATE,
 } from '@contracts'
 import type { IpcMain } from 'electron'
@@ -35,17 +36,45 @@ export function registerTask(ipcMain: IpcMain, withDb: WithDb): void {
     handleIpc(TASK_GET_ALL, () => withDb((db) => taskRepo.getAll(db)))
   )
   ipcMain.handle(
+    TASK_GET_SERVICE,
+    handleIpc(TASK_GET_SERVICE, () =>
+      withDb((db) => taskRepo.getServiceTask(db))
+    )
+  )
+  ipcMain.handle(
     TASK_UPDATE,
     validateAndHandle(
       TASK_UPDATE,
       [idSchema, taskUpdateSchema],
-      (_, id, data) => withDb((db) => taskRepo.update(db, id, data))
+      (_, id, data) =>
+        withDb((db) => {
+          const current = taskRepo.getById(db, id)
+          const isCompletingServiceTask =
+            current?.is_service === 1 &&
+            data.completed_at != null &&
+            data.completed_at !== ''
+          const updateData = isCompletingServiceTask
+            ? { ...data, is_service: 0 as const }
+            : data
+          const updated = taskRepo.update(db, id, updateData)
+          if (isCompletingServiceTask) {
+            taskRepo.ensureServiceTask(db)
+          }
+          return updated
+        })
     )
   )
   ipcMain.handle(
     TASK_DELETE,
     validateAndHandle(TASK_DELETE, [idSchema], (_, id) =>
-      withDb((db) => taskRepo.remove(db, id))
+      withDb((db) => {
+        const task = taskRepo.getById(db, id)
+        const removed = taskRepo.remove(db, id)
+        if (removed && task?.is_service === 1) {
+          taskRepo.ensureServiceTask(db)
+        }
+        return removed
+      })
     )
   )
 }

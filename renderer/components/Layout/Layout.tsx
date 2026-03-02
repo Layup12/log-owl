@@ -2,6 +2,7 @@ import {
   ArrowBack as ArrowBackIcon,
   Assessment as ReportIcon,
   DarkMode as DarkModeIcon,
+  Home as HomeIcon,
   LightMode as LightModeIcon,
 } from '@mui/icons-material'
 import { useLayoutHeader } from '@renderer/hooks'
@@ -18,11 +19,12 @@ import {
 import React, { useState } from 'react'
 
 import { ReportModal } from '../ReportModal'
+import { TaskTray } from '../TaskTray'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { mode, toggleMode } = useThemeStore()
   const [reportOpen, setReportOpen] = useState(false)
-  const { title, onBack, showReportFab } = useLayoutHeader()
+  const { title, onBack, onHome, showReportFab } = useLayoutHeader()
 
   return (
     <Box
@@ -34,35 +36,78 @@ export function Layout({ children }: { children: React.ReactNode }) {
       }}
     >
       <AppBar position="static" sx={{ flexShrink: 0 }}>
-        <Toolbar>
-          {onBack && (
-            <IconButton
-              color="inherit"
-              edge="start"
-              onClick={onBack}
-              aria-label="Назад"
-              sx={{ mr: 1 }}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-          )}
-          <Typography
-            variant="h6"
-            component="div"
+        <Toolbar sx={{ minWidth: 0, display: 'flex', gap: 2 }}>
+          <Box
             sx={{
-              flexGrow: 1,
+              flex: '1 1 0',
               minWidth: 0,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 2,
             }}
           >
-            {title}
-          </Typography>
+            <Box
+              sx={{
+                width: '50%',
+                minWidth: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
+              }}
+            >
+              {onBack && (
+                <IconButton
+                  color="inherit"
+                  edge="start"
+                  onClick={onBack}
+                  aria-label="Назад"
+                  sx={{ flexShrink: 0 }}
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+              )}
+              {onHome && (
+                <IconButton
+                  color="inherit"
+                  onClick={onHome}
+                  aria-label="На главную"
+                  sx={{ flexShrink: 0 }}
+                >
+                  <HomeIcon />
+                </IconButton>
+              )}
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{
+                  flex: 1,
+                  minWidth: 0,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {title}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                width: '50%',
+                maxWidth: 400,
+                minWidth: 0,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <TaskTray />
+            </Box>
+          </Box>
           <IconButton
             color="inherit"
             onClick={toggleMode}
             aria-label="toggle theme"
+            sx={{ flexShrink: 0, width: 48 }}
           >
             {mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
           </IconButton>

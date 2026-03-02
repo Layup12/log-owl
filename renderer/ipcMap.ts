@@ -60,6 +60,10 @@ const ipcMap = {
     args: [0] as [number],
     result: null as Task | null,
   },
+  [CHANNELS.TASK_GET_SERVICE]: {
+    args: [] as const,
+    result: null as Task | null,
+  },
   [CHANNELS.TASK_CREATE]: {
     args: [{} as TaskCreatePayload],
     result: {} as Task,

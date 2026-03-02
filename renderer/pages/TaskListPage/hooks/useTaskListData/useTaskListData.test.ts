@@ -1,4 +1,4 @@
-import { getAllTasks } from '@renderer/api'
+import { getAllTasks, getServiceTask } from '@renderer/api'
 import type { Task } from '@renderer/shared/types'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -7,9 +7,11 @@ import { useTaskListData } from './useTaskListData'
 
 vi.mock('@renderer/api', () => ({
   getAllTasks: vi.fn(),
+  getServiceTask: vi.fn(),
 }))
 
 const getAllTasksMock = vi.mocked(getAllTasks)
+const getServiceTaskMock = vi.mocked(getServiceTask)
 
 function createTask(overrides: Partial<Task> = {}): Task {
   return {
@@ -19,6 +21,7 @@ function createTask(overrides: Partial<Task> = {}): Task {
     completed_at: null,
     created_at: '2020-01-01T00:00:00Z',
     updated_at: '2020-01-01T00:00:00Z',
+    is_service: 0,
     ...overrides,
   }
 }
@@ -26,6 +29,7 @@ function createTask(overrides: Partial<Task> = {}): Task {
 describe('useTaskListData', () => {
   beforeEach(() => {
     getAllTasksMock.mockReset()
+    getServiceTaskMock.mockResolvedValue(null)
   })
 
   it('при mount вызывает getAllTasks', async () => {
@@ -38,9 +42,11 @@ describe('useTaskListData', () => {
     })
   })
 
-  it('при успешной загрузке выставляет tasks, loading false, error null', async () => {
+  it('при успешной загрузке выставляет tasks, serviceTask, loading false, error null', async () => {
     const tasks = [createTask({ id: 1 }), createTask({ id: 2 })]
+    const serviceTask = createTask({ id: 0, title: 'Сервис', is_service: 1 })
     getAllTasksMock.mockResolvedValue(tasks)
+    getServiceTaskMock.mockResolvedValue(serviceTask)
 
     const { result } = renderHook(() => useTaskListData())
 
@@ -48,6 +54,7 @@ describe('useTaskListData', () => {
       expect(result.current.loading).toBe(false)
     })
     expect(result.current.tasks).toEqual(tasks)
+    expect(result.current.serviceTask).toEqual(serviceTask)
     expect(result.current.error).toBeNull()
   })
 
@@ -103,6 +110,19 @@ describe('useTaskListData', () => {
       expect(result.current.loading).toBe(false)
     })
     expect(result.current.error).toBe('Failed to load tasks')
+  })
+
+  it('при ошибке getServiceTask выставляет error и loading false', async () => {
+    getAllTasksMock.mockResolvedValue([])
+    getServiceTaskMock.mockRejectedValue(new Error('Ошибка сервис-задачи'))
+
+    const { result } = renderHook(() => useTaskListData())
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false)
+    })
+    expect(result.current.error).toBe('Ошибка сервис-задачи')
+    expect(result.current.tasks).toEqual([])
   })
 
   it('setError обновляет error', async () => {

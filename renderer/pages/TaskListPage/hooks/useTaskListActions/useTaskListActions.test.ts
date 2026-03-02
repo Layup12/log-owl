@@ -16,6 +16,7 @@ function createTask(overrides: Partial<Task> = {}): Task {
     completed_at: null,
     created_at: '2020-01-01T00:00:00Z',
     updated_at: '2020-01-01T00:00:00Z',
+    is_service: 0,
     ...overrides,
   }
 }
@@ -134,6 +135,25 @@ describe('useTaskListActions', () => {
       expect(result.current.creating).toBe(false)
     })
     expect(onError).toHaveBeenCalledWith('Сеть недоступна')
+    expect(navigateMock).not.toHaveBeenCalled()
+  })
+
+  it('handleCreateTask при reject не типа Error вызывает onError с "Ошибка"', async () => {
+    createTaskApiMock.mockRejectedValue('network failure')
+
+    const onError = vi.fn()
+    const { result } = renderHook(() =>
+      useTaskListActions(createOptions({ onError }))
+    )
+
+    act(() => {
+      result.current.handleCreateTask()
+    })
+
+    await waitFor(() => {
+      expect(result.current.creating).toBe(false)
+    })
+    expect(onError).toHaveBeenCalledWith('Ошибка')
     expect(navigateMock).not.toHaveBeenCalled()
   })
 

@@ -15,9 +15,17 @@ vi.mock('@renderer/shared/store', () => ({
 }))
 
 vi.mock('../ReportModal', () => ({
-  ReportModal: ({ open }: { open: boolean }) => (
-    <div data-testid="report-modal" data-open={open ? 'true' : 'false'} />
+  ReportModal: ({ open, onClose }: { open: boolean; onClose: () => void }) => (
+    <div data-testid="report-modal" data-open={open ? 'true' : 'false'}>
+      <button data-testid="report-modal-close" onClick={onClose}>
+        Закрыть
+      </button>
+    </div>
   ),
+}))
+
+vi.mock('../TaskTray', () => ({
+  TaskTray: () => <div data-testid="task-tray" />,
 }))
 
 const useLayoutHeaderMock = vi.mocked(useLayoutHeader)
@@ -33,6 +41,18 @@ function renderLayout(options?: Parameters<typeof renderWithProviders>[1]) {
 }
 
 describe('Layout', () => {
+  it('отображает переданные children', () => {
+    useLayoutHeaderMock.mockReturnValue({ title: 'Главная', onBack: undefined })
+    useThemeStoreMock.mockReturnValue({
+      mode: 'light',
+      toggleMode: vi.fn(),
+    } as ReturnType<typeof useThemeStore>)
+
+    renderLayout()
+
+    expect(screen.getByText('content')).toBeInTheDocument()
+  })
+
   it('отображает заголовок и не показывает кнопку Назад, когда onBack не передан', () => {
     useLayoutHeaderMock.mockReturnValue({
       title: 'Главная страница',
@@ -112,6 +132,56 @@ describe('Layout', () => {
     expect(screen.queryByLabelText('Отчёт')).not.toBeInTheDocument()
   })
 
+  it('показывает кнопку На главную и вызывает onHome по клику, когда onHome передан', () => {
+    const onHome = vi.fn()
+
+    useLayoutHeaderMock.mockReturnValue({
+      title: 'Задача',
+      onBack: vi.fn(),
+      onHome,
+    })
+
+    useThemeStoreMock.mockReturnValue({
+      mode: 'light',
+      toggleMode: vi.fn(),
+    } as ReturnType<typeof useThemeStore>)
+
+    renderLayout()
+
+    const homeButton = screen.getByLabelText('На главную')
+    fireEvent.click(homeButton)
+
+    expect(onHome).toHaveBeenCalledTimes(1)
+  })
+
+  it('не показывает кнопку На главную, когда onHome не передан', () => {
+    useLayoutHeaderMock.mockReturnValue({
+      title: 'Главная',
+      onBack: undefined,
+    })
+
+    useThemeStoreMock.mockReturnValue({
+      mode: 'light',
+      toggleMode: vi.fn(),
+    } as ReturnType<typeof useThemeStore>)
+
+    renderLayout()
+
+    expect(screen.queryByLabelText('На главную')).not.toBeInTheDocument()
+  })
+
+  it('рендер TaskTray', () => {
+    useLayoutHeaderMock.mockReturnValue({ title: 'Главная', onBack: undefined })
+    useThemeStoreMock.mockReturnValue({
+      mode: 'light',
+      toggleMode: vi.fn(),
+    } as ReturnType<typeof useThemeStore>)
+
+    renderLayout()
+
+    expect(screen.getByTestId('task-tray')).toBeInTheDocument()
+  })
+
   it('показывает FAB и открывает модалку отчёта, если showReportFab=true', () => {
     const toggleMode = vi.fn()
 
@@ -138,5 +208,49 @@ describe('Layout', () => {
       'data-open',
       'true'
     )
+  })
+
+  it('при закрытии модального окна отчёта оно скрывается', () => {
+    useLayoutHeaderMock.mockReturnValue({
+      title: 'Главная',
+      onBack: undefined,
+      showReportFab: true,
+    } as unknown as ReturnType<typeof useLayoutHeader>)
+
+    useThemeStoreMock.mockReturnValue({
+      mode: 'light',
+      toggleMode: vi.fn(),
+    } as ReturnType<typeof useThemeStore>)
+
+    renderLayout()
+
+    fireEvent.click(screen.getByLabelText('Отчёт'))
+    expect(screen.getByTestId('report-modal')).toHaveAttribute(
+      'data-open',
+      'true'
+    )
+
+    fireEvent.click(screen.getByTestId('report-modal-close'))
+    expect(screen.getByTestId('report-modal')).toHaveAttribute(
+      'data-open',
+      'false'
+    )
+  })
+
+  it('при mode=dark кнопка переключения темы отображается и по клику вызывает toggleMode', () => {
+    const toggleMode = vi.fn()
+
+    useLayoutHeaderMock.mockReturnValue({ title: 'Главная', onBack: undefined })
+    useThemeStoreMock.mockReturnValue({
+      mode: 'dark',
+      toggleMode,
+    } as ReturnType<typeof useThemeStore>)
+
+    renderLayout()
+
+    const toggleButton = screen.getByLabelText('toggle theme')
+    fireEvent.click(toggleButton)
+
+    expect(toggleMode).toHaveBeenCalledTimes(1)
   })
 })

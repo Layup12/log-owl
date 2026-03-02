@@ -2,15 +2,14 @@ import { logDev } from '@main/lib'
 import { app, BrowserWindow } from 'electron'
 
 import { registerIpc } from '../ipc'
+import { bootstrap } from './bootstrap'
 import { startHeartbeat } from './heartbeat'
 import { initDb } from './initDb'
 import { createWindow } from './window'
 
-/**
- * Запуск приложения после app.whenReady(): БД, IPC, окно, heartbeat, обработчик activate.
- */
 export function runApp(): void {
   initDb()
+  bootstrap()
   registerIpc()
   createWindow()
   startHeartbeat()

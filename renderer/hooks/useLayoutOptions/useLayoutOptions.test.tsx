@@ -73,6 +73,40 @@ describe('useLayoutOptions', () => {
     })
   })
 
+  it('обновляет onHome в контексте', async () => {
+    const onHome = vi.fn()
+    const { Wrapper, getConfig } = createWrapper({ title: 'Исходный' })
+
+    renderHook(
+      () =>
+        useLayoutOptions({
+          title: 'С onHome',
+          onHome,
+        }),
+      { wrapper: Wrapper }
+    )
+
+    await waitFor(() => {
+      expect(getConfig().onHome).toBe(onHome)
+    })
+  })
+
+  it('сбрасывает onHome, если он не передан в options', async () => {
+    const onHome = vi.fn()
+    const { Wrapper, getConfig } = createWrapper({
+      title: 'Исходный',
+      onHome,
+    })
+
+    renderHook(() => useLayoutOptions({ title: 'Без кнопки домой' }), {
+      wrapper: Wrapper,
+    })
+
+    await waitFor(() => {
+      expect(getConfig().onHome).toBeUndefined()
+    })
+  })
+
   it('сбрасывает showReportFab в false, если он не передан в options', async () => {
     const initialConfig: LayoutConfig = {
       title: 'Исходный',

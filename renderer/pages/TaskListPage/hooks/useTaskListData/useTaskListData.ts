@@ -1,9 +1,10 @@
-import { getAllTasks } from '@renderer/api'
+import { getAllTasks, getServiceTask } from '@renderer/api'
 import type { Task } from '@renderer/shared/types'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export interface UseTaskListDataReturn {
   tasks: Task[]
+  serviceTask: Task | null
   loading: boolean
   error: string | null
   setError: (value: string | null) => void
@@ -15,14 +16,19 @@ export interface UseTaskListDataReturn {
 
 export function useTaskListData(): UseTaskListDataReturn {
   const [tasks, setTasks] = useState<Task[]>([])
+  const [serviceTask, setServiceTask] = useState<Task | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const loadTasks = useCallback(async () => {
     try {
       setError(null)
-      const result = await getAllTasks()
-      setTasks(result)
+      const [tasksResult, serviceTaskResult] = await Promise.all([
+        getAllTasks(),
+        getServiceTask(),
+      ])
+      setTasks(tasksResult)
+      setServiceTask(serviceTaskResult ?? null)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to load tasks')
     } finally {
@@ -46,6 +52,7 @@ export function useTaskListData(): UseTaskListDataReturn {
 
   return {
     tasks,
+    serviceTask,
     loading,
     error,
     setError,

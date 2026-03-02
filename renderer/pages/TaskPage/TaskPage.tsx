@@ -1,20 +1,26 @@
 import { useTheme } from '@mui/material/styles'
 import { useLayoutOptions } from '@renderer/hooks'
+import { useNavigationStore } from '@renderer/shared/store'
 import {
   Alert,
   Box,
   CircularProgress,
   useMediaQuery,
 } from '@renderer/shared/ui'
-import { useNavigate, useParams } from 'react-router'
+import { useCallback, useEffect } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router'
 
 import { TaskPageIntervalsAndSessions, TaskPageMainBlock } from './components'
 import { useTaskPageForm, useTaskPageIntervals } from './hooks'
 
 export function TaskPage() {
   const { id } = useParams<{ id: string }>()
+  const location = useLocation()
   const navigate = useNavigate()
+  const pushTask = useNavigationStore((s) => s.pushTask)
   const taskId = id ? parseInt(id, 10) : NaN
+
+  const state = location.state as { returnId?: number } | null
 
   const form = useTaskPageForm(taskId)
   const intervals = useTaskPageIntervals(taskId, {
@@ -30,9 +36,26 @@ export function TaskPage() {
   const theme = useTheme()
   const isWide = useMediaQuery(theme.breakpoints.up('md'))
 
+  useEffect(() => {
+    if (Number.isFinite(taskId)) {
+      pushTask({ id: taskId, title: form.task?.title ?? '' })
+    }
+  }, [taskId, form.task?.title, pushTask])
+
+  const returnId = state?.returnId
+  const onBack = useCallback(() => {
+    if (returnId != null) {
+      navigate(`/task/${returnId}`)
+    } else {
+      navigate('/')
+    }
+  }, [returnId, navigate])
+  const onHome = useCallback(() => navigate('/'), [navigate])
+
   useLayoutOptions({
     title: `Задача: ${form.task?.title ?? '-'}`,
-    onBack: () => navigate('/'),
+    onBack,
+    onHome: returnId != null ? onHome : undefined,
   })
 
   if (!Number.isFinite(taskId)) {

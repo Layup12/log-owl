@@ -1,4 +1,5 @@
 import { getTaskById, updateTask } from '@renderer/api'
+import { useTaskInvalidationStore } from '@renderer/shared/store'
 import type { Task } from '@renderer/shared/types'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -117,6 +118,7 @@ export function useTaskPageForm(taskId: number): UseTaskPageFormResult {
     if (normTitle(current) === normTitle(task.title ?? '')) return
     const payload = normTitle(current) || ''
     await updateTask(task.id, { title: payload })
+    useTaskInvalidationStore.getState().invalidate()
     setTask((t) => (t ? { ...t, title: payload } : null))
     reset({ ...getValues(), title: payload }, { keepDefaultValues: false })
   }, [task, getValues, reset])
@@ -127,6 +129,7 @@ export function useTaskPageForm(taskId: number): UseTaskPageFormResult {
     if (current === (task.comment ?? '')) return
     const payload = current || null
     await updateTask(task.id, { comment: payload })
+    useTaskInvalidationStore.getState().invalidate()
     setTask((prev) => (prev ? { ...prev, comment: payload ?? '' } : null))
     reset(
       { ...getValues(), comment: payload ?? '' },
