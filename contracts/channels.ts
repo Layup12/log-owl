@@ -1,6 +1,7 @@
 export const CHANNELS = {
   TASK_GET_ALL: 'task:getAll',
   TASK_GET_BY_ID: 'task:getById',
+  TASK_GET_SERVICE: 'task:getService',
   TASK_CREATE: 'task:create',
   TASK_UPDATE: 'task:update',
   TASK_DELETE: 'task:delete',
@@ -36,6 +37,7 @@ export const IPC_CHANNELS: readonly IpcChannelName[] = Object.values(CHANNELS)
 
 export const TASK_GET_ALL = CHANNELS.TASK_GET_ALL
 export const TASK_GET_BY_ID = CHANNELS.TASK_GET_BY_ID
+export const TASK_GET_SERVICE = CHANNELS.TASK_GET_SERVICE
 export const TASK_CREATE = CHANNELS.TASK_CREATE
 export const TASK_UPDATE = CHANNELS.TASK_UPDATE
 export const TASK_DELETE = CHANNELS.TASK_DELETE

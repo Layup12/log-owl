@@ -1,5 +1,9 @@
 import { deleteTask } from '@renderer/api'
-import { useTimerStore } from '@renderer/shared/store'
+import {
+  useNavigationStore,
+  useTaskInvalidationStore,
+  useTimerStore,
+} from '@renderer/shared/store'
 import {
   Button,
   Dialog,
@@ -37,6 +41,8 @@ export function DeleteTaskConfirmDialog({
         clearActive()
       }
       await deleteTask(taskId)
+      useNavigationStore.getState().removeTask(taskId)
+      useTaskInvalidationStore.getState().invalidate()
       onClose()
       onDeleted?.()
     } finally {

@@ -2,9 +2,11 @@ import {
   Check as CheckIcon,
   Close as CloseIcon,
   Delete as DeleteIcon,
+  PushPin as PushPinIcon,
 } from '@mui/icons-material'
 import { updateTask } from '@renderer/api'
 import { useDeleteTaskDialog } from '@renderer/hooks'
+import { useTaskInvalidationStore } from '@renderer/shared/store'
 import type { Task } from '@renderer/shared/types'
 import {
   Box,
@@ -25,14 +27,17 @@ interface TaskCardProps {
 }
 
 export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
+  const isService = task.is_service === 1
   const isCompleted = !!task.completed_at
   const deleteTaskDialog = useDeleteTaskDialog()
+  const invalidateTasks = useTaskInvalidationStore((s) => s.invalidate)
 
   const handleToggleCompleted = async (e: React.MouseEvent) => {
     e.stopPropagation()
     await updateTask(task.id, {
       completed_at: isCompleted ? null : new Date().toISOString(),
     })
+    invalidateTasks()
     onUpdate()
   }
 
@@ -52,6 +57,10 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
           display: 'flex',
           cursor: onOpen ? 'pointer' : undefined,
           '&:hover': onOpen ? { bgcolor: 'action.hover' } : undefined,
+          ...(isService && {
+            borderWidth: 2,
+            borderColor: 'secondary.main',
+          }),
         }}
         onClick={onOpen ? () => onOpen() : undefined}
       >
@@ -65,9 +74,23 @@ export function TaskCard({ task, onUpdate, onOpen }: TaskCardProps) {
             alignItems: 'stretch',
             py: 1,
             px: 1,
+            position: 'relative',
             '&:last-child': { pb: 1 },
           }}
         >
+          {isService && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 4,
+                right: 4,
+                color: 'secondary.main',
+              }}
+              aria-hidden
+            >
+              <PushPinIcon sx={{ fontSize: 18 }} />
+            </Box>
+          )}
           <Typography
             variant="body2"
             sx={{

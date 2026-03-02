@@ -17,6 +17,7 @@ function createTask(overrides: Partial<Task> = {}): Task {
     completed_at: null,
     created_at: '2020-01-01T00:00:00Z',
     updated_at: '2020-01-01T00:00:00Z',
+    is_service: 0,
     ...overrides,
   }
 }
@@ -31,9 +32,31 @@ vi.mock('@renderer/hooks', () => ({
 }))
 
 vi.mock('./components', () => ({
-  TaskGrid: () => <div data-testid="task-list-task-grid" />,
+  TaskGrid: ({
+    tasks,
+  }: {
+    tasks: { id: number }[]
+    cellSize: number
+    onTaskOpen: (id: number) => void
+    onTasksUpdate: () => void
+    onCreateTask: () => void
+    onCreateTaskLoading?: boolean
+  }) => (
+    <div
+      data-testid="task-list-task-grid"
+      data-first-task-id={tasks[0]?.id ?? undefined}
+    />
+  ),
   CompletedTasksSection: () => (
     <div data-testid="task-list-completed-section" />
+  ),
+}))
+
+vi.mock('@renderer/components', () => ({
+  TaskCard: ({ task }: { task: { id: number; title: string } }) => (
+    <div data-testid="task-card" data-task-id={task.id}>
+      {task.title}
+    </div>
   ),
 }))
 
@@ -46,6 +69,7 @@ function createTaskListOverrides(
 ): UseTaskListDataReturn {
   return {
     tasks: [],
+    serviceTask: null,
     loading: false,
     error: null,
     setError: vi.fn(),
@@ -161,5 +185,26 @@ describe('TaskListPage', () => {
     expect(
       screen.queryByTestId('task-list-completed-section')
     ).not.toBeInTheDocument()
+  })
+
+  it('при наличии serviceTask первая карточка в сетке — сервисная задача', () => {
+    const serviceTask = createTask({
+      id: 99,
+      title: 'Сервисная задача',
+      is_service: 1,
+    })
+    useTaskListDataMock.mockReturnValue(
+      createTaskListOverrides({
+        loading: false,
+        error: null,
+        serviceTask,
+        activeTasks: [createTask({ id: 1 })],
+      })
+    )
+
+    renderTaskListPage()
+
+    const grid = screen.getByTestId('task-list-task-grid')
+    expect(grid).toHaveAttribute('data-first-task-id', '99')
   })
 })

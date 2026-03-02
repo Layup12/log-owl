@@ -16,8 +16,15 @@ export function useLayoutOptions(options: LayoutConfig) {
       ...prev,
       ...(options.title !== undefined && { title: options.title }),
       onBack: 'onBack' in options ? options.onBack : undefined,
+      onHome: 'onHome' in options ? options.onHome : undefined,
       showReportFab: 'showReportFab' in options ? options.showReportFab : false,
     }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- only sync options.title/setConfig
-  }, [options.title, setConfig])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only sync options/setConfig
+  }, [
+    options.title,
+    options.onBack,
+    options.onHome,
+    options.showReportFab,
+    setConfig,
+  ])
 }

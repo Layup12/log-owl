@@ -1,6 +1,6 @@
 {
   "name": "log-owl",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "productName": "Log Owl",
   "description": "Desktop time tracking application",
   "main": "dist-electron/main/main.js",

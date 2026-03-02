@@ -9,15 +9,17 @@ function now(): string {
 export function create(db: Database.Database, data: TaskInsert): Task {
   const created_at = now()
   const updated_at = created_at
+  const is_service = data.is_service ?? 0
   const stmt = db.prepare(
-    'INSERT INTO tasks (title, comment, completed_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?)'
+    'INSERT INTO tasks (title, comment, completed_at, created_at, updated_at, is_service) VALUES (?, ?, ?, ?, ?, ?)'
   )
   const result = stmt.run(
     data.title,
     data.comment ?? null,
     data.completed_at ?? null,
     created_at,
-    updated_at
+    updated_at,
+    is_service
   )
   const id = result.lastInsertRowid as number
   return getById(db, id)!
@@ -42,16 +44,36 @@ export function update(
   const current = getById(db, id)
   if (!current) return null
   const updated_at = data.updated_at ?? now()
+  const is_service =
+    data.is_service !== undefined ? data.is_service : current.is_service
   db.prepare(
-    'UPDATE tasks SET title = ?, comment = ?, completed_at = ?, updated_at = ? WHERE id = ?'
+    'UPDATE tasks SET title = ?, comment = ?, completed_at = ?, updated_at = ?, is_service = ? WHERE id = ?'
   ).run(
     data.title ?? current.title,
     data.comment !== undefined ? data.comment : current.comment,
     data.completed_at !== undefined ? data.completed_at : current.completed_at,
     updated_at,
+    is_service,
     id
   )
   return getById(db, id)
+}
+
+export function getServiceTask(db: Database.Database): Task | null {
+  const row = db
+    .prepare(
+      'SELECT * FROM tasks WHERE is_service = 1 AND completed_at IS NULL LIMIT 1'
+    )
+    .get() as Task | undefined
+  return row ?? null
+}
+
+const SERVICE_TASK_TITLE = 'Сервисная'
+
+export function ensureServiceTask(db: Database.Database): Task | null {
+  const existing = getServiceTask(db)
+  if (existing) return existing
+  return create(db, { title: SERVICE_TASK_TITLE, is_service: 1 })
 }
 
 export function remove(db: Database.Database, id: number): boolean {

@@ -8,10 +8,6 @@ import { setRecoveryClosedIds } from '../ipc/app'
 import { runMigrations } from '../migrations/runner'
 import { runRecovery } from './recovery'
 
-/**
- * Инициализация БД: миграции, проверка доступа, recovery открытых time_entries.
- * Результат recovery передаётся в setRecoveryClosedIds для UI.
- */
 export function initDb(): void {
   const userDataPath = app.getPath('userData')
   const db = getDb(userDataPath)

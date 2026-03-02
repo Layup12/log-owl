@@ -3,6 +3,7 @@ import {
   TASK_DELETE,
   TASK_GET_ALL,
   TASK_GET_BY_ID,
+  TASK_GET_SERVICE,
   TASK_UPDATE,
   unwrapIpcResponse,
 } from '@contracts'
@@ -22,6 +23,11 @@ export async function getAllTasks(): Promise<Task[]> {
 
 export async function getTaskById(id: number): Promise<Task | null> {
   const response = await window.electron.invoke(TASK_GET_BY_ID, id)
+  return unwrapIpcResponse(response)
+}
+
+export async function getServiceTask(): Promise<Task | null> {
+  const response = await window.electron.invoke(TASK_GET_SERVICE)
   return unwrapIpcResponse(response)
 }
 

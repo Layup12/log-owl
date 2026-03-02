@@ -14,6 +14,7 @@ export function TaskListPage() {
     error,
     setError,
     reload,
+    serviceTask,
     activeTasks,
     completedTasks,
     hasCompleted,
@@ -43,6 +44,11 @@ export function TaskListPage() {
     )
   }
 
+  const tasksForGrid =
+    serviceTask != null
+      ? [serviceTask, ...activeTasks.filter((t) => t.id !== serviceTask.id)]
+      : activeTasks
+
   return (
     <Box
       sx={{
@@ -55,7 +61,7 @@ export function TaskListPage() {
     >
       <Box sx={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
         <TaskGrid
-          tasks={activeTasks}
+          tasks={tasksForGrid}
           cellSize={CELL_SIZE}
           onTaskOpen={openTask}
           onTasksUpdate={reload}

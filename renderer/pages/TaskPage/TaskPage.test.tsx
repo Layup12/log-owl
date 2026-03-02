@@ -9,6 +9,13 @@ import type { UseTaskPageFormResult, UseTaskPageIntervalsResult } from './hooks'
 import { useTaskPageForm, useTaskPageIntervals } from './hooks'
 import { TaskPage } from './TaskPage'
 
+const navigateMock = vi.fn()
+
+vi.mock('react-router', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('react-router')>()
+  return { ...mod, useNavigate: () => navigateMock }
+})
+
 function createTask(overrides: Partial<Task> = {}): Task {
   return {
     id: 1,
@@ -17,6 +24,7 @@ function createTask(overrides: Partial<Task> = {}): Task {
     completed_at: null,
     created_at: '2020-01-01T00:00:00Z',
     updated_at: '2020-01-01T00:00:00Z',
+    is_service: 0,
     ...overrides,
   }
 }
@@ -96,7 +104,9 @@ function createIntervalsOverrides(
   }
 }
 
-function renderTaskPage(initialEntry: string = '/task/1') {
+function renderTaskPage(
+  initialEntry: string | { pathname: string; state?: unknown } = '/task/1'
+) {
   return renderWithProviders(
     <Routes>
       <Route path="/task/:id" element={<TaskPage />} />
@@ -180,5 +190,34 @@ describe('TaskPage', () => {
     expect(
       screen.getByTestId('task-page-intervals-and-sessions')
     ).toBeInTheDocument()
+  })
+
+  it('при location.state.returnId передаёт onBack (назад к задаче) и onHome (на главную)', () => {
+    useTaskPageFormMock.mockReturnValue(
+      createFormOverrides({
+        task: createTask({ id: 7, title: 'Task 7' }),
+      })
+    )
+
+    renderTaskPage({ pathname: '/task/7', state: { returnId: 5 } })
+
+    expect(useLayoutOptionsMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Задача: Task 7',
+        onHome: expect.any(Function),
+      })
+    )
+
+    const lastCall = useLayoutOptionsMock.mock.calls.at(-1)?.[0]
+    if (!lastCall?.onBack || !lastCall?.onHome)
+      throw new Error('expected onBack/onHome')
+
+    navigateMock.mockClear()
+    lastCall.onBack()
+    expect(navigateMock).toHaveBeenCalledWith('/task/5')
+
+    navigateMock.mockClear()
+    lastCall.onHome()
+    expect(navigateMock).toHaveBeenCalledWith('/')
   })
 })

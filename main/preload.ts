@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 const ALLOWED_CHANNELS: readonly string[] = [
-  'task:getAll', 'task:getById', 'task:create', 'task:update', 'task:delete',
+  'task:getAll', 'task:getById', 'task:getService', 'task:create', 'task:update', 'task:delete',
   'taskSession:getAll', 'taskSession:getById', 'taskSession:getByTaskId', 'taskSession:create', 'taskSession:update', 'taskSession:delete', 'taskSession:closeOpenByTaskId',
   'timeEntry:getAll', 'timeEntry:getById', 'timeEntry:getByTaskId', 'timeEntry:create', 'timeEntry:update', 'timeEntry:delete',
   'settings:get', 'settings:set', 'settings:getAll', 'settings:delete',

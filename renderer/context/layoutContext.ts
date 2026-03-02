@@ -3,6 +3,7 @@ import { createContext, type Dispatch, type SetStateAction } from 'react'
 export interface LayoutConfig {
   title: string
   onBack?: () => void
+  onHome?: () => void
   showReportFab?: boolean
 }
 

@@ -5,12 +5,14 @@ export interface Task {
   completed_at: string | null
   created_at: string
   updated_at: string
+  is_service: 0 | 1
 }
 
 export interface TaskInsert {
   title: string
   comment?: string | null
   completed_at?: string | null
+  is_service?: 0 | 1
 }
 
 export interface TimeEntry {
